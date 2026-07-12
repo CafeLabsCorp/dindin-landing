@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const WEB_APP_URL = "https://dindin-cafelabs.web.app";
+const WEB_APP_URL = "https://app.dindin.cafelabs.net";
 
 const features = [
   {
