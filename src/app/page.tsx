@@ -108,12 +108,22 @@ export default function Home() {
       <footer className="w-full border-t border-border">
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-6 py-8 text-sm text-subtle sm:flex-row sm:justify-between">
           <span>Dindin — um produto Café Labs</span>
-          <a
-            href="mailto:contato@cafelabs.net"
-            className="transition-colors hover:text-foreground"
-          >
-            contato@cafelabs.net
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://github.com/CafeLabsDev/dindin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-foreground"
+            >
+              GitHub
+            </a>
+            <a
+              href="mailto:contato@cafelabs.net"
+              className="transition-colors hover:text-foreground"
+            >
+              contato@cafelabs.net
+            </a>
+          </div>
         </div>
       </footer>
     </>
