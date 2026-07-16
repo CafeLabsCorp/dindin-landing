@@ -1,14 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f9f9f7;
-  --surface: #fcfcfb;
-  --foreground: #0b0b0b;
-  --muted: #52514e;
-  --subtle: #898781;
-  --border: rgba(11, 11, 11, 0.1);
-  --primary: #2a78d6;
+  --background: #faf4ea;
+  --surface: #ffffff;
+  --foreground: #211a12;
+  --muted: #5c5346;
+  --subtle: #746a5d;
+  --border: rgba(33, 26, 18, 0.12);
+
+  --primary: #2e6f4d;
   --primary-foreground: #ffffff;
+  --primary-container: #d7ebdd;
+  --primary-container-foreground: #14392a;
+
+  --secondary: #6b7a5e;
+
+  --accent: #c1502e;
+  --accent-foreground: #ffffff;
+
+  --status-warning: #a8660a;
+  --status-critical: #c13b3b;
+  --status-good: #2f7d3b;
+
+  --cat-1: #2e6f4d; /* Verde Cofre */
+  --cat-2: #c1502e; /* Terracota */
+  --cat-3: #a8660a; /* Âmbar */
+  --cat-4: #2e6b78; /* Azul Petróleo */
+  --cat-5: #7a4a6b; /* Ameixa */
+  --cat-6: #a23b3b; /* Vinho */
+  --cat-7: #7c7a3a; /* Oliva */
+  --cat-8: #b97064; /* Argila Rosada */
+
+  --shadow-card: 0 1px 3px rgba(33, 26, 18, 0.08), 0 1px 2px rgba(33, 26, 18, 0.06);
 }
 
 @theme inline {
@@ -18,21 +41,73 @@
   --color-muted: var(--muted);
   --color-subtle: var(--subtle);
   --color-border: var(--border);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --font-sans: var(--font-inter);
+  --color-primary-container: var(--primary-container);
+  --color-primary-container-foreground: var(--primary-container-foreground);
+
+  --color-secondary: var(--secondary);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-status-warning: var(--status-warning);
+  --color-status-critical: var(--status-critical);
+  --color-status-good: var(--status-good);
+
+  --color-cat-1: var(--cat-1);
+  --color-cat-2: var(--cat-2);
+  --color-cat-3: var(--cat-3);
+  --color-cat-4: var(--cat-4);
+  --color-cat-5: var(--cat-5);
+  --color-cat-6: var(--cat-6);
+  --color-cat-7: var(--cat-7);
+  --color-cat-8: var(--cat-8);
+
+  --font-sans: var(--font-work-sans);
+  --font-serif: var(--font-fraunces);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0d0d0d;
-    --surface: #1a1a19;
-    --foreground: #ffffff;
-    --muted: #c3c2b7;
-    --subtle: #898781;
-    --border: rgba(255, 255, 255, 0.1);
-    --primary: #2a78d6;
-    --primary-foreground: #ffffff;
+    --background: #16130f;
+    --surface: #201c17;
+    --foreground: #f5f1ea;
+    --muted: #c9c2b4;
+    --subtle: #a79c89;
+    --border: rgba(245, 241, 234, 0.12);
+
+    --primary: #7fcb9e;
+    --primary-foreground: #0d3320;
+    --primary-container: #1f4732;
+    --primary-container-foreground: #bee8ce;
+
+    --secondary: #a9b896;
+
+    --accent: #f0916a;
+    --accent-foreground: #431507;
+
+    --status-warning: #e0a542;
+    --status-critical: #e8746a;
+    --status-good: #6fcb82;
+
+    --cat-1: #5fae80;
+    --cat-2: #e2896a;
+    --cat-3: #e0a542;
+    --cat-4: #4e96a3;
+    --cat-5: #a87ca0;
+    --cat-6: #d06868;
+    --cat-7: #aca85c;
+    --cat-8: #d69c90;
+
+    /* Rely on the hairline border for elevation in dark mode; surface is
+       already a step lighter than the page background. */
+    --shadow-card: none;
+  }
+
+  .envelope-tab {
+    opacity: 0.22;
   }
 }
 
@@ -40,4 +115,99 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+/* Decorative "envelope" shapes scattered behind the hero copy. Purely
+   decorative — always aria-hidden and hidden on small viewports. */
+.envelope-tab {
+  position: absolute;
+  width: 76px;
+  height: 96px;
+  border-radius: 14px 14px 6px 6px;
+  opacity: 0.16;
+  border: 1px solid currentColor;
+}
+
+.envelope-tab::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 14px;
+  height: 8px;
+  border-radius: 4px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+@media (max-width: 720px) {
+  .envelope-tab {
+    display: none;
+  }
+}
+
+/* Card hover/lift micro-interaction, gated behind reduced-motion preference. */
+@media (prefers-reduced-motion: no-preference) {
+  .card-hover {
+    transition:
+      transform 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Caixinhas demo: brief scale pulse on a changed number, gated behind
+   reduced-motion preference. Applied by remounting the element (via a
+   changing `key`) whenever its value updates, which restarts the animation. */
+@media (prefers-reduced-motion: no-preference) {
+  .value-pulse {
+    animation: value-pulse 420ms ease;
+  }
+}
+
+@keyframes value-pulse {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Caixinhas demo: transient delta pill shown beside a changed number. The
+   show/hide toggle itself is not motion (it's a state, always applied); only
+   the smoothing transition between the two states is gated behind
+   reduced-motion preference. */
+.delta-pill {
+  opacity: 0;
+  transform: translateY(2px);
+  white-space: nowrap;
+}
+
+.delta-pill.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .delta-pill {
+    transition:
+      opacity 250ms ease,
+      transform 250ms ease;
+  }
 }
