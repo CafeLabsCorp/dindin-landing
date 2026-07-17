@@ -34,8 +34,8 @@ const features = [
 export default function Home() {
   return (
     <>
-      <header className="w-full border-b border-border">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+      <header className="h-16 w-full border-b border-border">
+        <div className="mx-auto flex h-full max-w-5xl items-center justify-between px-6">
           <div className="flex items-center gap-2">
             <Image src="/dindin-logo.svg" alt="Dindin" width={28} height={28} />
             <span className="text-lg font-semibold">Dindin</span>
@@ -52,7 +52,7 @@ export default function Home() {
       </header>
 
       <main className="flex-1">
-        <section className="relative overflow-hidden">
+        <section className="relative flex min-h-[calc(100dvh-4rem)] items-center overflow-hidden">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
             {heroTabs.map((tab, index) => (
               <span
@@ -70,7 +70,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-6 px-6 py-24 text-center">
+          <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-6 py-12 text-center">
             <Image src="/dindin-logo.svg" alt="" width={72} height={72} aria-hidden />
             <h1 className="max-w-2xl font-serif text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
               Controle financeiro por caixinhas
@@ -89,30 +89,11 @@ export default function Home() {
             </a>
             <a
               href="#caixinhas"
-              className="text-sm text-subtle transition-colors hover:text-foreground"
+              className="scroll-cue mt-6 flex flex-col items-center gap-1 text-sm text-subtle transition-colors hover:text-foreground"
             >
-              veja como funciona ↓
+              veja como funciona
+              <span aria-hidden="true">↓</span>
             </a>
-          </div>
-        </section>
-
-        <CaixinhasDemo />
-
-        <section className="mx-auto max-w-5xl px-6 py-16">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="card-hover rounded-2xl border border-border bg-surface p-6 shadow-card"
-              >
-                <h3 className="text-base font-semibold text-foreground">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
           </div>
         </section>
 
@@ -140,6 +121,26 @@ export default function Home() {
               <span className="text-base font-semibold">Android</span>
               <span className="text-sm">Em breve</span>
             </div>
+          </div>
+        </section>
+
+        <CaixinhasDemo />
+
+        <section className="mx-auto max-w-5xl px-6 py-16">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {features.map((feature) => (
+              <div
+                key={feature.title}
+                className="card-hover rounded-2xl border border-border bg-surface p-6 shadow-card"
+              >
+                <h3 className="text-base font-semibold text-foreground">
+                  {feature.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
       </main>
