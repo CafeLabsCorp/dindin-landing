@@ -1,42 +1,52 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useLocale, useTranslations } from "next-intl";
 
 type CaixinhaId = "verde" | "terra" | "ambar";
 type Mode = "add" | "alocar" | "transferir";
 
 interface Caixinha {
   id: CaixinhaId;
-  name: string;
   color: string;
   balance: number;
 }
 
 const SEED_CONTA = 500;
 const SEED_CAIXINHAS: Caixinha[] = [
-  { id: "verde", name: "Verde Cofre", color: "var(--cat-1)", balance: 0 },
-  { id: "terra", name: "Terracota", color: "var(--cat-2)", balance: 0 },
-  { id: "ambar", name: "Âmbar", color: "var(--cat-3)", balance: 0 },
+  { id: "verde", color: "var(--cat-1)", balance: 0 },
+  { id: "terra", color: "var(--cat-2)", balance: 0 },
+  { id: "ambar", color: "var(--cat-3)", balance: 0 },
 ];
 
-const currencyFormatter = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-});
-const numberFormatter = new Intl.NumberFormat("pt-BR", {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
+const CAIXINHA_NAME_KEY: Record<CaixinhaId, "caixinhaVerde" | "caixinhaTerra" | "caixinhaAmbar"> = {
+  verde: "caixinhaVerde",
+  terra: "caixinhaTerra",
+  ambar: "caixinhaAmbar",
+};
 
-function fmt(value: number) {
-  return currencyFormatter.format(value);
+// Currency stays in BRL regardless of language — this demo mirrors a
+// Brazilian financial app, only the surrounding copy switches locale — but
+// grouping/decimal separators still follow the active locale's convention.
+function intlLocale(locale: string) {
+  return locale === "pt" ? "pt-BR" : "en-US";
+}
+
+function fmt(locale: string, value: number) {
+  return new Intl.NumberFormat(intlLocale(locale), {
+    style: "currency",
+    currency: "BRL",
+  }).format(value);
 }
 
 // Increases read "+R$ 150,00"; decreases read "R$ -150,00" — money moving out
 // via a chosen transfer/allocation isn't an error, so it keeps the ordinary
 // currency shape rather than a plain minus sign in front.
-function fmtDelta(amount: number) {
-  const abs = numberFormatter.format(Math.abs(amount));
+function fmtDelta(locale: string, amount: number) {
+  const abs = new Intl.NumberFormat(intlLocale(locale), {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Math.abs(amount));
   return amount > 0 ? `+R$ ${abs}` : `R$ -${abs}`;
 }
 
@@ -79,6 +89,7 @@ function usePulse() {
 }
 
 function DeltaPill({ delta }: { delta: DeltaState | null }) {
+  const locale = useLocale();
   if (!delta) return null;
   return (
     <span
@@ -86,7 +97,7 @@ function DeltaPill({ delta }: { delta: DeltaState | null }) {
         delta.show ? "show" : ""
       } ${delta.amount > 0 ? "text-status-good" : "text-subtle"}`}
     >
-      {fmtDelta(delta.amount)}
+      {fmtDelta(locale, delta.amount)}
     </span>
   );
 }
@@ -98,6 +109,9 @@ function pulseClassName(pulseId: number, base: string) {
 }
 
 export default function CaixinhasDemo() {
+  const t = useTranslations("Demo");
+  const locale = useLocale();
+
   const [conta, setConta] = useState(SEED_CONTA);
   const [caixinhas, setCaixinhas] = useState<Caixinha[]>(SEED_CAIXINHAS);
   const [mode, setMode] = useState<Mode>("add");
@@ -147,6 +161,10 @@ export default function CaixinhasDemo() {
     firstField?.focus();
   }, [mode]);
 
+  function caixinhaName(id: CaixinhaId) {
+    return t(CAIXINHA_NAME_KEY[id]);
+  }
+
   function announce(message: string) {
     setLiveMessage("");
     requestAnimationFrame(() => setLiveMessage(message));
@@ -168,7 +186,7 @@ export default function CaixinhasDemo() {
     event.preventDefault();
     const val = parseFloat(addValor);
     if (!val || val <= 0) {
-      setAddError("Informe um valor maior que zero.");
+      setAddError(t("errorValueRequired"));
       return;
     }
     setAddError("");
@@ -176,7 +194,7 @@ export default function CaixinhasDemo() {
     setConta(newConta);
     contaPulse.trigger();
     contaDelta.trigger(val);
-    announce(`Saldo adicionado. Conta agora com ${fmt(newConta)}.`);
+    announce(t("announceAdded", { amount: fmt(locale, newConta) }));
     setAddValor("");
   }
 
@@ -184,11 +202,11 @@ export default function CaixinhasDemo() {
     event.preventDefault();
     const val = parseFloat(alocarValor);
     if (!val || val <= 0) {
-      setAlocarError("Informe um valor maior que zero.");
+      setAlocarError(t("errorValueRequired"));
       return;
     }
     if (val > conta) {
-      setAlocarError(`Valor maior que o saldo da conta (${fmt(conta)}).`);
+      setAlocarError(t("alocarErrorExceeds", { balance: fmt(locale, conta) }));
       return;
     }
     const destino = caixinhas.find((c) => c.id === alocarDestino);
@@ -201,7 +219,13 @@ export default function CaixinhasDemo() {
     contaDelta.trigger(-val);
     pulseById[destino.id].trigger();
     deltaById[destino.id].trigger(val);
-    announce(`Alocado ${fmt(val)} para ${destino.name}. Saldo da conta agora ${fmt(newConta)}.`);
+    announce(
+      t("announceAllocated", {
+        amount: fmt(locale, val),
+        name: caixinhaName(destino.id),
+        balance: fmt(locale, newConta),
+      }),
+    );
     setAlocarValor("");
   }
 
@@ -212,11 +236,11 @@ export default function CaixinhasDemo() {
     if (!origem || !destino) return;
     const val = parseFloat(transfValor);
     if (!val || val <= 0) {
-      setTransfError("Informe um valor maior que zero.");
+      setTransfError(t("errorValueRequired"));
       return;
     }
     if (val > origem.balance) {
-      setTransfError(`Valor maior que o saldo de ${origem.name} (${fmt(origem.balance)}).`);
+      setTransfError(t("transferErrorExceeds", { name: caixinhaName(origem.id), balance: fmt(locale, origem.balance) }));
       return;
     }
     setTransfError("");
@@ -231,7 +255,13 @@ export default function CaixinhasDemo() {
     deltaById[origem.id].trigger(-val);
     pulseById[destino.id].trigger();
     deltaById[destino.id].trigger(val);
-    announce(`Transferido ${fmt(val)} de ${origem.name} para ${destino.name}.`);
+    announce(
+      t("announceTransferred", {
+        amount: fmt(locale, val),
+        origem: caixinhaName(origem.id),
+        destino: caixinhaName(destino.id),
+      }),
+    );
     setTransfValor("");
   }
 
@@ -248,27 +278,28 @@ export default function CaixinhasDemo() {
     setTransfDestinoRaw("");
     setTransfValor("");
     setTransfError("");
-    announce("Demo reiniciada.");
+    announce(t("announceReset"));
   }
 
   const modes: { id: Mode; label: string }[] = [
-    { id: "add", label: "Adicionar saldo" },
-    { id: "alocar", label: "Alocar" },
-    { id: "transferir", label: "Transferir" },
+    { id: "add", label: t("modeAdd") },
+    { id: "alocar", label: t("modeAlocar") },
+    { id: "transferir", label: t("modeTransferir") },
   ];
 
   return (
     <section id="caixinhas" className="mx-auto max-w-5xl px-6 py-16">
       <h2 className="text-center font-serif text-3xl font-semibold text-foreground">
-        Como funcionam as caixinhas
+        {t("title")}
       </h2>
       <p className="mx-auto mt-2 max-w-xl text-center leading-relaxed text-muted">
-        Mexa nos valores abaixo: adicione saldo, aloque pra uma caixinha, transfira entre elas.
-        É só um gostinho de como o app de verdade funciona.
+        {t("description")}
       </p>
 
       <div className="mx-auto mt-10 max-w-2xl rounded-2xl border border-border bg-surface p-6 shadow-card sm:p-8">
-        <div className="text-xs font-bold tracking-wide text-subtle uppercase">Saldo na conta</div>
+        <div className="text-xs font-bold tracking-wide text-subtle uppercase">
+          {t("accountBalanceLabel")}
+        </div>
         <div className="mt-1 flex flex-wrap items-center gap-2.5">
           <span
             key={contaPulse.pulseId}
@@ -277,7 +308,7 @@ export default function CaixinhasDemo() {
               "font-serif text-3xl font-bold text-foreground [font-variant-numeric:tabular-nums]",
             )}
           >
-            {fmt(conta)}
+            {fmt(locale, conta)}
           </span>
           <DeltaPill delta={contaDelta.delta} />
         </div>
@@ -289,7 +320,7 @@ export default function CaixinhasDemo() {
           />
         </div>
         <p className="mt-2 text-xs text-subtle [font-variant-numeric:tabular-nums]">
-          {fmt(conta)} ainda não alocados de {fmt(totalGeral)} no total.
+          {t("unallocatedText", { amount: fmt(locale, conta), total: fmt(locale, totalGeral) })}
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -305,7 +336,9 @@ export default function CaixinhasDemo() {
                   className="h-2.5 w-2.5 flex-none rounded-full"
                   style={{ background: c.color }}
                 />
-                <span className="text-sm font-semibold text-foreground">{c.name}</span>
+                <span className="text-sm font-semibold text-foreground">
+                  {caixinhaName(c.id)}
+                </span>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <span
@@ -315,7 +348,7 @@ export default function CaixinhasDemo() {
                     "font-serif text-xl font-bold text-foreground [font-variant-numeric:tabular-nums]",
                   )}
                 >
-                  {fmt(c.balance)}
+                  {fmt(locale, c.balance)}
                 </span>
                 <DeltaPill delta={deltaById[c.id].delta} />
               </div>
@@ -324,7 +357,7 @@ export default function CaixinhasDemo() {
         </div>
 
         <div className="mt-7 border-t border-border pt-5">
-          <div role="group" aria-label="Ação" className="flex flex-wrap gap-2">
+          <div role="group" aria-label={t("actionGroupLabel")} className="flex flex-wrap gap-2">
             {modes.map((m) => (
               <button
                 key={m.id}
@@ -347,7 +380,7 @@ export default function CaixinhasDemo() {
               <form onSubmit={handleAddSubmit} noValidate>
                 <div className="mb-3.5 flex flex-col gap-1">
                   <label htmlFor="add-valor" className="text-sm font-semibold text-muted">
-                    Valor a adicionar (R$)
+                    {t("addValorLabel")}
                   </label>
                   <input
                     id="add-valor"
@@ -366,7 +399,7 @@ export default function CaixinhasDemo() {
                   type="submit"
                   className="h-11 rounded-full bg-accent px-6 text-sm font-bold text-accent-foreground transition-opacity hover:opacity-90"
                 >
-                  Adicionar
+                  {t("addButton")}
                 </button>
               </form>
             )}
@@ -376,7 +409,7 @@ export default function CaixinhasDemo() {
                 <div className="flex flex-wrap gap-3">
                   <div className="flex min-w-[160px] flex-1 flex-col gap-1">
                     <label htmlFor="alocar-destino" className="text-sm font-semibold text-muted">
-                      Para qual caixinha
+                      {t("alocarDestinoLabel")}
                     </label>
                     <select
                       id="alocar-destino"
@@ -386,14 +419,14 @@ export default function CaixinhasDemo() {
                     >
                       {caixinhas.map((c) => (
                         <option key={c.id} value={c.id}>
-                          {c.name}
+                          {caixinhaName(c.id)}
                         </option>
                       ))}
                     </select>
                   </div>
                   <div className="flex min-w-[160px] flex-1 flex-col gap-1">
                     <label htmlFor="alocar-valor" className="text-sm font-semibold text-muted">
-                      Valor (R$)
+                      {t("alocarValorLabel")}
                     </label>
                     <input
                       id="alocar-valor"
@@ -412,14 +445,14 @@ export default function CaixinhasDemo() {
                   {alocarError}
                 </p>
                 {conta === 0 && (
-                  <p className="mb-3 text-xs text-subtle">Adicione saldo à conta antes de alocar.</p>
+                  <p className="mb-3 text-xs text-subtle">{t("alocarNeedsBalance")}</p>
                 )}
                 <button
                   type="submit"
                   disabled={conta === 0}
                   className="mt-2 h-11 rounded-full bg-accent px-6 text-sm font-bold text-accent-foreground transition-opacity hover:opacity-90 disabled:opacity-45"
                 >
-                  Alocar
+                  {t("alocarButton")}
                 </button>
               </form>
             )}
@@ -428,15 +461,13 @@ export default function CaixinhasDemo() {
               <form onSubmit={handleTransferirSubmit} noValidate>
                 {eligibleOrigins.length === 0 ? (
                   <>
-                    <p className="mb-3 text-xs text-subtle">
-                      Nenhuma caixinha tem saldo pra transferir ainda — aloque algo primeiro.
-                    </p>
+                    <p className="mb-3 text-xs text-subtle">{t("transferNoEligible")}</p>
                     <button
                       type="submit"
                       disabled
                       className="h-11 rounded-full bg-accent px-6 text-sm font-bold text-accent-foreground disabled:opacity-45"
                     >
-                      Transferir
+                      {t("transferButton")}
                     </button>
                   </>
                 ) : (
@@ -444,7 +475,7 @@ export default function CaixinhasDemo() {
                     <div className="flex flex-wrap gap-3">
                       <div className="flex min-w-[140px] flex-1 flex-col gap-1">
                         <label htmlFor="transf-origem" className="text-sm font-semibold text-muted">
-                          De
+                          {t("transferOrigemLabel")}
                         </label>
                         <select
                           id="transf-origem"
@@ -454,14 +485,14 @@ export default function CaixinhasDemo() {
                         >
                           {eligibleOrigins.map((c) => (
                             <option key={c.id} value={c.id}>
-                              {c.name}
+                              {caixinhaName(c.id)}
                             </option>
                           ))}
                         </select>
                       </div>
                       <div className="flex min-w-[140px] flex-1 flex-col gap-1">
                         <label htmlFor="transf-destino" className="text-sm font-semibold text-muted">
-                          Para
+                          {t("transferDestinoLabel")}
                         </label>
                         <select
                           id="transf-destino"
@@ -471,14 +502,14 @@ export default function CaixinhasDemo() {
                         >
                           {destinoOptions.map((c) => (
                             <option key={c.id} value={c.id}>
-                              {c.name}
+                              {caixinhaName(c.id)}
                             </option>
                           ))}
                         </select>
                       </div>
                       <div className="flex min-w-[140px] flex-1 flex-col gap-1">
                         <label htmlFor="transf-valor" className="text-sm font-semibold text-muted">
-                          Valor (R$)
+                          {t("transferValorLabel")}
                         </label>
                         <input
                           id="transf-valor"
@@ -499,7 +530,7 @@ export default function CaixinhasDemo() {
                       type="submit"
                       className="h-11 rounded-full bg-accent px-6 text-sm font-bold text-accent-foreground transition-opacity hover:opacity-90"
                     >
-                      Transferir
+                      {t("transferButton")}
                     </button>
                   </>
                 )}
@@ -509,13 +540,13 @@ export default function CaixinhasDemo() {
         </div>
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-2 text-xs text-subtle">
-          <span>Prévia local — os valores não são salvos. Atualizar a página reinicia tudo.</span>
+          <span>{t("previewNote")}</span>
           <button
             type="button"
             onClick={handleReset}
             className="font-bold text-primary underline decoration-1 underline-offset-2"
           >
-            Reiniciar demo
+            {t("resetButton")}
           </button>
         </div>
       </div>

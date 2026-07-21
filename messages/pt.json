@@ -1,0 +1,68 @@
+{
+  "Metadata": {
+    "title": "Dindin — controle financeiro por caixinhas",
+    "description": "Organize receitas e gastos em caixinhas categorizadas. App gratuito da Café Labs, disponível na web."
+  },
+  "Header": {
+    "brandBy": "por Café Labs",
+    "switchLanguage": "Trocar idioma"
+  },
+  "Hero": {
+    "title": "Controle financeiro por caixinhas",
+    "description": "Receitas entram, são alocadas entre categorias, e os gastos saem de cada caixinha. Simples assim.",
+    "ctaOpenApp": "Abrir Dindin na web",
+    "ctaHowItWorks": "veja como funciona"
+  },
+  "Download": {
+    "title": "Baixe o Dindin",
+    "webLabel": "Web",
+    "webAvailable": "Disponível agora",
+    "windowsLabel": "Windows",
+    "androidLabel": "Android",
+    "comingSoon": "Em breve"
+  },
+  "Features": {
+    "item1Title": "Receitas alocadas na hora",
+    "item1Description": "Cada receita que entra é distribuída entre as caixinhas, sem planilha e sem cálculo manual.",
+    "item2Title": "Gastos no lugar certo",
+    "item2Description": "Todo gasto sai da caixinha correta, então você sempre sabe o que ainda pode gastar em cada categoria.",
+    "item3Title": "Backup e restauração",
+    "item3Description": "Exporte todos os seus dados em JSON quando quiser, e importe de volta pra migrar entre contas."
+  },
+  "Demo": {
+    "title": "Como funcionam as caixinhas",
+    "description": "Mexa nos valores abaixo: adicione saldo, aloque pra uma caixinha, transfira entre elas. É só um gostinho de como o app de verdade funciona.",
+    "accountBalanceLabel": "Saldo na conta",
+    "unallocatedText": "{amount} ainda não alocados de {total} no total.",
+    "actionGroupLabel": "Ação",
+    "modeAdd": "Adicionar saldo",
+    "modeAlocar": "Alocar",
+    "modeTransferir": "Transferir",
+    "caixinhaVerde": "Verde Cofre",
+    "caixinhaTerra": "Terracota",
+    "caixinhaAmbar": "Âmbar",
+    "addValorLabel": "Valor a adicionar (R$)",
+    "addButton": "Adicionar",
+    "errorValueRequired": "Informe um valor maior que zero.",
+    "alocarDestinoLabel": "Para qual caixinha",
+    "alocarValorLabel": "Valor (R$)",
+    "alocarErrorExceeds": "Valor maior que o saldo da conta ({balance}).",
+    "alocarNeedsBalance": "Adicione saldo à conta antes de alocar.",
+    "alocarButton": "Alocar",
+    "transferOrigemLabel": "De",
+    "transferDestinoLabel": "Para",
+    "transferValorLabel": "Valor (R$)",
+    "transferErrorExceeds": "Valor maior que o saldo de {name} ({balance}).",
+    "transferNoEligible": "Nenhuma caixinha tem saldo pra transferir ainda — aloque algo primeiro.",
+    "transferButton": "Transferir",
+    "previewNote": "Prévia local — os valores não são salvos. Atualizar a página reinicia tudo.",
+    "resetButton": "Reiniciar demo",
+    "announceAdded": "Saldo adicionado. Conta agora com {amount}.",
+    "announceAllocated": "Alocado {amount} para {name}. Saldo da conta agora {balance}.",
+    "announceTransferred": "Transferido {amount} de {origem} para {destino}.",
+    "announceReset": "Demo reiniciada."
+  },
+  "Footer": {
+    "brand": "Dindin — um produto Café Labs"
+  }
+}
