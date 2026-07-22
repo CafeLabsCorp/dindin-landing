@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
 import CaixinhasDemo from "./CaixinhasDemo";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const WEB_APP_URL = "https://app.dindin.cafelabs.net";
 
@@ -13,25 +15,21 @@ const heroTabs = [
   { bottom: "10px", right: "14%", rotate: "-7deg", cat: "var(--cat-5)" },
 ];
 
-const features = [
-  {
-    title: "Receitas alocadas na hora",
-    description:
-      "Cada receita que entra é distribuída entre as caixinhas, sem planilha e sem cálculo manual.",
-  },
-  {
-    title: "Gastos no lugar certo",
-    description:
-      "Todo gasto sai da caixinha correta, então você sempre sabe o que ainda pode gastar em cada categoria.",
-  },
-  {
-    title: "Backup e restauração",
-    description:
-      "Exporte todos os seus dados em JSON quando quiser, e importe de volta pra migrar entre contas.",
-  },
-];
+export default async function Home() {
+  const [tHeader, tHero, tDownload, tFeatures, tFooter] = await Promise.all([
+    getTranslations("Header"),
+    getTranslations("Hero"),
+    getTranslations("Download"),
+    getTranslations("Features"),
+    getTranslations("Footer"),
+  ]);
 
-export default function Home() {
+  const features = [
+    { title: tFeatures("item1Title"), description: tFeatures("item1Description") },
+    { title: tFeatures("item2Title"), description: tFeatures("item2Description") },
+    { title: tFeatures("item3Title"), description: tFeatures("item3Description") },
+  ];
+
   return (
     <>
       <header className="h-16 w-full border-b border-border">
@@ -40,14 +38,17 @@ export default function Home() {
             <Image src="/dindin-logo.svg" alt="Dindin" width={28} height={28} />
             <span className="text-lg font-semibold">Dindin</span>
           </div>
-          <a
-            href="https://cafelabs.net"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-subtle transition-colors hover:text-foreground"
-          >
-            por Café Labs
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://cafelabs.net"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-subtle transition-colors hover:text-foreground"
+            >
+              {tHeader("brandBy")}
+            </a>
+            <LanguageSwitcher />
+          </div>
         </div>
       </header>
 
@@ -73,11 +74,10 @@ export default function Home() {
           <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-6 py-12 text-center">
             <Image src="/dindin-logo.svg" alt="" width={72} height={72} aria-hidden />
             <h1 className="max-w-2xl font-serif text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-              Controle financeiro por caixinhas
+              {tHero("title")}
             </h1>
             <p className="max-w-xl text-lg leading-relaxed text-muted">
-              Receitas entram, são alocadas entre categorias, e os gastos saem de cada
-              caixinha. Simples assim.
+              {tHero("description")}
             </p>
             <a
               href={WEB_APP_URL}
@@ -85,13 +85,13 @@ export default function Home() {
               rel="noopener noreferrer"
               className="mt-2 inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-base font-semibold text-accent-foreground transition-opacity hover:opacity-90"
             >
-              Abrir Dindin na web
+              {tHero("ctaOpenApp")}
             </a>
             <a
               href="#caixinhas"
               className="scroll-cue mt-6 flex flex-col items-center gap-1 text-sm text-subtle transition-colors hover:text-foreground"
             >
-              veja como funciona
+              {tHero("ctaHowItWorks")}
               <span aria-hidden="true">↓</span>
             </a>
           </div>
@@ -99,7 +99,7 @@ export default function Home() {
 
         <section className="mx-auto max-w-5xl px-6 py-16">
           <h2 className="text-center font-serif text-3xl font-semibold text-foreground">
-            Baixe o Dindin
+            {tDownload("title")}
           </h2>
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <a
@@ -108,18 +108,20 @@ export default function Home() {
               rel="noopener noreferrer"
               className="card-hover flex flex-col items-center gap-2 rounded-2xl border border-border bg-surface p-6 text-center shadow-card transition-colors hover:border-primary"
             >
-              <span className="text-base font-semibold text-foreground">Web</span>
+              <span className="text-base font-semibold text-foreground">
+                {tDownload("webLabel")}
+              </span>
               <span className="inline-flex rounded-full bg-primary-container px-3 py-1 text-xs font-semibold text-primary-container-foreground">
-                Disponível agora
+                {tDownload("webAvailable")}
               </span>
             </a>
             <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-border p-6 text-center text-subtle">
-              <span className="text-base font-semibold">Windows</span>
-              <span className="text-sm">Em breve</span>
+              <span className="text-base font-semibold">{tDownload("windowsLabel")}</span>
+              <span className="text-sm">{tDownload("comingSoon")}</span>
             </div>
             <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-border p-6 text-center text-subtle">
-              <span className="text-base font-semibold">Android</span>
-              <span className="text-sm">Em breve</span>
+              <span className="text-base font-semibold">{tDownload("androidLabel")}</span>
+              <span className="text-sm">{tDownload("comingSoon")}</span>
             </div>
           </div>
         </section>
@@ -147,7 +149,7 @@ export default function Home() {
 
       <footer className="w-full border-t border-border">
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-6 py-8 text-sm text-subtle sm:flex-row sm:justify-between">
-          <span>Dindin — um produto Café Labs</span>
+          <span>{tFooter("brand")}</span>
           <div className="flex items-center gap-4">
             <a
               href="https://github.com/CafeLabsDev/dindin"

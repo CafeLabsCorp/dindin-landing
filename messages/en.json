@@ -1,0 +1,68 @@
+{
+  "Metadata": {
+    "title": "Dindin — budget-envelope money management",
+    "description": "Organize your income and spending into categorized budget envelopes. Free app by Café Labs, available on the web."
+  },
+  "Header": {
+    "brandBy": "by Café Labs",
+    "switchLanguage": "Switch language"
+  },
+  "Hero": {
+    "title": "Budget-envelope money management",
+    "description": "Income comes in, gets allocated across categories, and spending comes out of each envelope. That simple.",
+    "ctaOpenApp": "Open Dindin on the web",
+    "ctaHowItWorks": "see how it works"
+  },
+  "Download": {
+    "title": "Get Dindin",
+    "webLabel": "Web",
+    "webAvailable": "Available now",
+    "windowsLabel": "Windows",
+    "androidLabel": "Android",
+    "comingSoon": "Coming soon"
+  },
+  "Features": {
+    "item1Title": "Income allocated instantly",
+    "item1Description": "Every deposit is split across your envelopes on the spot, no spreadsheet and no manual math.",
+    "item2Title": "Spending in the right place",
+    "item2Description": "Every expense comes out of the right envelope, so you always know what's left to spend in each category.",
+    "item3Title": "Backup and restore",
+    "item3Description": "Export all your data as JSON whenever you want, and import it back to migrate between accounts."
+  },
+  "Demo": {
+    "title": "How budget envelopes work",
+    "description": "Try the values below: add funds, allocate to an envelope, transfer between them. Just a taste of how the real app works.",
+    "accountBalanceLabel": "Account balance",
+    "unallocatedText": "{amount} still unallocated out of {total} total.",
+    "actionGroupLabel": "Action",
+    "modeAdd": "Add funds",
+    "modeAlocar": "Allocate",
+    "modeTransferir": "Transfer",
+    "caixinhaVerde": "Green Vault",
+    "caixinhaTerra": "Terracotta",
+    "caixinhaAmbar": "Amber",
+    "addValorLabel": "Amount to add (R$)",
+    "addButton": "Add",
+    "errorValueRequired": "Enter an amount greater than zero.",
+    "alocarDestinoLabel": "To which envelope",
+    "alocarValorLabel": "Amount (R$)",
+    "alocarErrorExceeds": "Amount is greater than the account balance ({balance}).",
+    "alocarNeedsBalance": "Add funds to the account before allocating.",
+    "alocarButton": "Allocate",
+    "transferOrigemLabel": "From",
+    "transferDestinoLabel": "To",
+    "transferValorLabel": "Amount (R$)",
+    "transferErrorExceeds": "Amount is greater than {name}'s balance ({balance}).",
+    "transferNoEligible": "No envelope has a balance to transfer yet — allocate something first.",
+    "transferButton": "Transfer",
+    "previewNote": "Local preview — nothing is saved. Refreshing the page resets everything.",
+    "resetButton": "Reset demo",
+    "announceAdded": "Funds added. Account balance is now {amount}.",
+    "announceAllocated": "Allocated {amount} to {name}. Account balance is now {balance}.",
+    "announceTransferred": "Transferred {amount} from {origem} to {destino}.",
+    "announceReset": "Demo reset."
+  },
+  "Footer": {
+    "brand": "Dindin — a Café Labs product"
+  }
+}
