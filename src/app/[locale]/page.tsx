@@ -152,7 +152,7 @@ export default async function Home() {
           <span>{tFooter("brand")}</span>
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/CafeLabsDev/dindin"
+              href="https://github.com/CafeLabsCorp/dindin"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-foreground"

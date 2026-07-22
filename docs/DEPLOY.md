@@ -5,8 +5,8 @@
 - **Hosting:** Vercel, via a integração Git (não CLI — não há `.vercel/` neste
   ambiente nem `vercel.json` no repo, então a conexão projeto-Vercel↔repo foi
   feita pelo dashboard, não por `vercel link` local).
-- **Repositório remoto:** `git@github.com:CafeLabsDev/dindin-landing.git`
-  (conta/organização `CafeLabsDev`), branch `main` rastreando `origin/main`.
+- **Repositório remoto:** `https://github.com/CafeLabsCorp/dindin-landing.git`
+  (organização `CafeLabsCorp`), branch `main` rastreando `origin/main`.
 - **Domínio:** `dindin.cafelabs.net`. Confirmado por resolução DNS direta neste
   ambiente: o subdomínio é um `CNAME` pra `<hash>.vercel-dns-017.com`, que
   resolve pros IPs anycast da Vercel (`64.29.17.65` / `216.198.79.65`) — ou
