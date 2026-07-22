@@ -1,76 +1,90 @@
 # dindin-landing
 
-Landing page de download do [Dindin](https://github.com/CafeLabsDev/dindin), app de
-controle financeiro por caixinhas da Café Labs. Site estático (Next.js), hospedado
-separado do app real, no domínio `dindin.cafelabs.net` — identidade visual própria
-("Envelope caloroso"), herdada 1:1 do app, não a do portfólio nem a da Café Labs
-institucional.
+**[Leia em Português](README.pt-br.md)**
 
-Inclui uma demo interativa client-side (`CaixinhasDemo.tsx`) que deixa mexer em
-saldo/alocação/transferência entre caixinhas sem precisar abrir o app de verdade.
+Download landing page for [Dindin](https://github.com/CafeLabsCorp/dindin), Café
+Labs' budget-envelope personal finance app. Static site (Next.js), hosted
+separately from the real app, at `dindin.cafelabs.net` — its own visual identity
+("Warm Envelope"), inherited 1:1 from the app, not the portfolio's or Café Labs
+institutional site's.
+
+Includes an interactive client-side demo (`CaixinhasDemo.tsx`) that lets you play
+with balance/allocation/transfer between envelopes without opening the real app.
+Available in Portuguese (default) and English (`next-intl`, `/pt` and `/en`
+routing, language switcher in the header).
 
 ## Stack
 
-| Camada          | Tecnologia                                                          |
-| --------------- | -------------------------------------------------------------------- |
-| Framework       | Next.js 16 (App Router), React 19                                     |
-| Estilo          | Tailwind CSS v4 (tokens via `@theme inline` em `globals.css`)         |
-| Tipografia      | Fraunces (headings) + Work Sans (corpo), via `next/font/google`      |
-| Linguagem       | TypeScript                                                            |
-| Lint            | ESLint (`eslint-config-next`)                                         |
-| Hosting/deploy  | Vercel, deploy automático a cada push em `main`                       |
+| Layer           | Technology                                                            |
+| --------------- | ---------------------------------------------------------------------- |
+| Framework       | Next.js 16 (App Router), React 19                                       |
+| Styling         | Tailwind CSS v4 (tokens via `@theme inline` in `globals.css`)           |
+| Typography      | Fraunces (headings) + Work Sans (body), via `next/font/google`         |
+| i18n            | `next-intl` (PT default, EN, `/[locale]` routing)                       |
+| Language        | TypeScript                                                              |
+| Lint            | ESLint (`eslint-config-next`)                                           |
+| Hosting/deploy  | Vercel, automatic deploy on every push to `main`                        |
 
-Mesmo padrão de stack do site institucional (`cafelabs-portifolio`) e do
+Same stack pattern as the institutional site (`cafelabs-portifolio`) and
 `domo-landing`.
 
-## Rodando localmente
+## Running locally
 
-Pré-requisito: Node.js 20+ (testado com v20.20.1).
+Prerequisite: Node.js 20+ (tested with v20.20.1).
 
 ```bash
 npm install
 npm run dev
 ```
 
-Abre em `http://localhost:3000`. Outros scripts: `npm run build` (build de
-produção), `npm run start` (serve o build), `npm run lint`.
+Opens at `http://localhost:3000`. Other scripts: `npm run build` (production
+build), `npm run start` (serves the build), `npm run lint`.
 
-## Estrutura de pastas
+## Folder structure
 
 ```
-src/app/
-  layout.tsx        # layout raiz: fontes (Fraunces/Work Sans), metadata
-  page.tsx           # única rota (/): header, hero, download, demo, features, footer
-  CaixinhasDemo.tsx  # demo interativa client-side das caixinhas
-  globals.css        # tokens de design ("Envelope caloroso") + Tailwind v4
+src/
+  proxy.ts                # next-intl middleware — reads the locale from the URL
+  i18n/                    # routing.ts, navigation.ts, request.ts
+  app/
+    favicon.ico            # outside [locale], doesn't vary by language
+    [locale]/
+      layout.tsx           # root layout: fonts (Fraunces/Work Sans), metadata
+      page.tsx              # single route (/): header, hero, download, demo, features, footer
+      LanguageSwitcher.tsx  # language switcher in the header
+      CaixinhasDemo.tsx     # interactive client-side envelopes demo
+      globals.css           # design tokens ("Warm Envelope") + Tailwind v4
+messages/
+  pt.json                  # Portuguese copy
+  en.json                  # English copy
 public/
   dindin-logo.svg
 ```
 
-Sem rotas além de `/` — é uma landing de página única.
+Routes: `/pt` and `/en` (root `/` redirects to the default locale).
 
-## Documentação
+## Documentation
 
-- [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) — estrutura de rotas/componentes e a
-  lógica de estado da demo de caixinhas.
-- [`docs/DESIGN.md`](docs/DESIGN.md) — tokens da identidade "Envelope caloroso"
-  (cor, tipografia, forma).
-- [`docs/DEPLOY.md`](docs/DEPLOY.md) — deploy na Vercel e DNS de
-  `dindin.cafelabs.net`.
+- [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) — route/component structure and the
+  envelopes demo's state logic.
+- [`docs/DESIGN.md`](docs/DESIGN.md) — "Warm Envelope" identity tokens
+  (color, typography, shape).
+- [`docs/DEPLOY.md`](docs/DEPLOY.md) — Vercel deploy and `dindin.cafelabs.net`
+  DNS.
 
-Não há `docs/BACKEND.md`: este repo não tem backend próprio — é site estático,
-sem chamadas de API nem persistência (a demo roda inteira em memória do
-navegador).
+No `docs/BACKEND.md`: this repo has no backend of its own — it's a static
+site, no API calls or persistence (the demo runs entirely in browser memory).
 
 ## Status
 
-- [x] Hero, features e seção de downloads.
-- [x] Botão "Web" ativo, linkando pro app real (`app.dindin.cafelabs.net`).
-- [x] Demo interativa de caixinhas (`CaixinhasDemo.tsx`).
-- [x] Padrão estrutural de landing da Café Labs aplicado (hero 100dvh, indicador de
-      scroll, acesso rápido ao produto acima da dobra) — ver `docs/ARQUITETURA.md`.
-- [x] No ar em `dindin.cafelabs.net` (Vercel) — ver `docs/DEPLOY.md`.
-- [ ] Download Windows — placeholder "em breve", depende de decidir o empacotamento
+- [x] Hero, features, and download section.
+- [x] "Web" button active, linking to the real app (`app.dindin.cafelabs.net`).
+- [x] Interactive envelopes demo (`CaixinhasDemo.tsx`).
+- [x] Café Labs landing structural pattern applied (100dvh hero, scroll
+      indicator, above-the-fold product access) — see `docs/ARQUITETURA.md`.
+- [x] PT/EN internationalization with `next-intl`, switcher in the header.
+- [x] Live at `dindin.cafelabs.net` (Vercel) — see `docs/DEPLOY.md`.
+- [ ] Windows download — "coming soon" placeholder, pending packaging decision
       (zip vs. Inno Setup).
-- [ ] Download Android — placeholder "em breve", depende de decidir onde hospedar o
-      `.apk` de release.
+- [ ] Android download — "coming soon" placeholder, pending decision on where
+      to host the release `.apk`.
