@@ -2,10 +2,6 @@
 
 # Design — "Warm Envelope" identity
 
-> TODO: confirmar — this document was written before the i18n restructure
-> (commit `12694cb`, 2026-07-22), which moved `globals.css`/`layout.tsx` under
-> `src/app/[locale]/`. The paths below reflect the pre-restructure layout.
-
 This landing inherits the Dindin app's visual identity 1:1
 (`/home/felip/projetos/dindin/docs/DESIGN.md`) — same palette, same
 typography, contrast already verified there (WCAG 2.1, manual
@@ -19,9 +15,9 @@ that rename, the tokens are equivalent 1:1.
 
 ## Color
 
-Implemented as CSS custom properties in `src/app/globals.css` (`:root` for
-light mode, `@media (prefers-color-scheme: dark)` for dark), mapped to
-Tailwind v4 via `@theme inline`.
+Implemented as CSS custom properties in `src/app/[locale]/globals.css`
+(`:root` for light mode, `@media (prefers-color-scheme: dark)` for dark),
+mapped to Tailwind v4 via `@theme inline`.
 
 ### Light
 
@@ -91,12 +87,13 @@ hero's decorative "envelope tabs" (`--cat-4` through `--cat-7`).
 
 ## Typography
 
-Loaded via `next/font/google` in `src/app/layout.tsx` (self-hosted at build
-time — no network request at runtime, no latency/offline trade-off):
+Loaded via `next/font/google` in `src/app/[locale]/layout.tsx` (self-hosted
+at build time — no network request at runtime, no latency/offline
+trade-off):
 
 - **Fraunces** (`--font-fraunces`, weights 400/600) — warm serif, used only
-  in the hero H1 and two section headings ("Download Dindin", "How envelopes
-  work"). Mapped to `--font-serif` in `@theme inline`.
+  in the hero H1 and two section headings ("Get Dindin", "How budget
+  envelopes work"). Mapped to `--font-serif` in `@theme inline`.
 - **Work Sans** (`--font-work-sans`, weights 400/500/600) — body, buttons,
   labels, everywhere else on the page. Mapped to `--font-sans`.
 
