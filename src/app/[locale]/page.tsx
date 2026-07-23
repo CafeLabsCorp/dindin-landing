@@ -87,17 +87,29 @@ export default async function Home() {
             >
               {tHero("ctaOpenApp")}
             </a>
-            <a
-              href="#caixinhas"
-              className="scroll-cue mt-6 flex flex-col items-center gap-1 text-sm text-subtle transition-colors hover:text-foreground"
-            >
-              {tHero("ctaHowItWorks")}
-              <span aria-hidden="true">↓</span>
-            </a>
+            <div className="mt-6 flex items-center gap-3 text-sm text-subtle">
+              <a
+                href="#caixinhas"
+                className="scroll-cue inline-flex items-center gap-1 transition-colors hover:text-foreground"
+              >
+                {tHero("ctaHowItWorks")}
+                <span aria-hidden="true">↓</span>
+              </a>
+              <span aria-hidden="true" className="opacity-50">
+                |
+              </span>
+              <a
+                href="#downloads"
+                className="scroll-cue inline-flex items-center gap-1 transition-colors hover:text-foreground"
+              >
+                {tHero("ctaDownload")}
+                <span aria-hidden="true">↓</span>
+              </a>
+            </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-5xl px-6 py-16">
+        <section id="downloads" className="mx-auto max-w-5xl px-6 py-16">
           <h2 className="text-center font-serif text-3xl font-semibold text-foreground">
             {tDownload("title")}
           </h2>
