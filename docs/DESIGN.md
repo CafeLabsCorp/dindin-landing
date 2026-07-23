@@ -1,44 +1,50 @@
-# Design — identidade "Envelope caloroso"
+**[Leia em Português](DESIGN.pt-br.md)**
 
-Esta landing herda 1:1 a identidade visual definida para o app Dindin
-(`/home/felip/projetos/dindin/docs/DESIGN.md`) — mesma paleta, mesma tipografia,
-contraste já verificado lá (WCAG 2.1, cálculo manual de luminância/contraste). Os
-valores abaixo são os mesmos hexadecimais, só **não devem ser re-derivados aqui**:
-qualquer mudança de paleta nasce no app e é replicada pra esta landing, não o
-contrário.
+# Design — "Warm Envelope" identity
 
-**Mapeamento de nomes:** o app chama o terceiro papel de cor de `tertiary`; esta
-landing usa `accent` para o mesmo papel (mesmo valor, `#C1502E`/`#F0916A`). Fora
-esse renome, os tokens são equivalentes 1:1.
+> TODO: confirmar — this document was written before the i18n restructure
+> (commit `12694cb`, 2026-07-22), which moved `globals.css`/`layout.tsx` under
+> `src/app/[locale]/`. The paths below reflect the pre-restructure layout.
 
-## Cor
+This landing inherits the Dindin app's visual identity 1:1
+(`/home/felip/projetos/dindin/docs/DESIGN.md`) — same palette, same
+typography, contrast already verified there (WCAG 2.1, manual
+luminance/contrast calculation). The values below are the same hex codes, they
+just **must not be re-derived here**: any palette change originates in the app
+and is replicated to this landing, not the other way around.
 
-Implementados como CSS custom properties em `src/app/globals.css` (`:root` para o
-tema claro, `@media (prefers-color-scheme: dark)` para o escuro), mapeados pro
+**Name mapping:** the app calls the third color role `tertiary`; this landing
+uses `accent` for the same role (same value, `#C1502E`/`#F0916A`). Aside from
+that rename, the tokens are equivalent 1:1.
+
+## Color
+
+Implemented as CSS custom properties in `src/app/globals.css` (`:root` for
+light mode, `@media (prefers-color-scheme: dark)` for dark), mapped to
 Tailwind v4 via `@theme inline`.
 
-### Claro
+### Light
 
-| Token (`globals.css`)                | Hex                        | Papel                                             |
-| ------------------------------------- | -------------------------- | -------------------------------------------------- |
-| `--background`                        | `#FAF4EA`                  | Fundo da página — ivory quente ("a mesa")          |
-| `--surface`                           | `#FFFFFF`                  | Cards ("papel")                                    |
-| `--foreground`                        | `#211A12`                  | Texto principal                                    |
-| `--muted`                             | `#5C5346`                  | Texto secundário                                   |
-| `--subtle`                            | `#746A5D`                  | Texto terciário/legendas                           |
-| `--border`                            | `rgba(33,26,18,0.12)`      | Hairline decorativo                                |
-| `--primary`                           | `#2E6F4D` ("Verde Cofre")  | Marca — CTA de header/links, foco                  |
-| `--primary-foreground`                | `#FFFFFF`                  | Texto sobre `primary`                              |
-| `--primary-container`                 | `#D7EBDD`                  | Fill tonal (badge "Disponível agora")              |
-| `--primary-container-foreground`      | `#14392A`                  | Texto sobre `primary-container`                    |
-| `--secondary`                         | `#6B7A5E`                  | Sage — barra de progresso "não alocado"            |
-| `--accent`                            | `#C1502E` ("Terracota")    | CTA principal ("Abrir Dindin na web") — uso raro   |
-| `--accent-foreground`                 | `#FFFFFF`                  | Texto sobre `accent`                               |
-| `--status-warning`                    | `#A8660A`                  |                                                      |
-| `--status-critical`                   | `#C13B3B`                  | Erros de validação da demo                         |
-| `--status-good`                       | `#2F7D3B`                  | Deltas positivos na demo                           |
+| Token (`globals.css`)                | Hex                        | Role                                                |
+| ------------------------------------- | -------------------------- | ---------------------------------------------------- |
+| `--background`                        | `#FAF4EA`                  | Page background — warm ivory ("the table")           |
+| `--surface`                           | `#FFFFFF`                  | Cards ("paper")                                       |
+| `--foreground`                        | `#211A12`                  | Primary text                                          |
+| `--muted`                             | `#5C5346`                  | Secondary text                                        |
+| `--subtle`                            | `#746A5D`                  | Tertiary text/captions                                |
+| `--border`                            | `rgba(33,26,18,0.12)`      | Decorative hairline                                   |
+| `--primary`                           | `#2E6F4D` ("Verde Cofre")  | Brand — header CTA/links, focus                       |
+| `--primary-foreground`                | `#FFFFFF`                  | Text on `primary`                                     |
+| `--primary-container`                 | `#D7EBDD`                  | Tonal fill ("Available now" badge)                    |
+| `--primary-container-foreground`      | `#14392A`                  | Text on `primary-container`                           |
+| `--secondary`                         | `#6B7A5E`                  | Sage — "unallocated" progress bar                     |
+| `--accent`                            | `#C1502E` ("Terracota")    | Primary CTA ("Open Dindin on the web") — rare use      |
+| `--accent-foreground`                 | `#FFFFFF`                  | Text on `accent`                                      |
+| `--status-warning`                    | `#A8660A`                  |                                                        |
+| `--status-critical`                   | `#C13B3B`                  | Demo validation errors                                |
+| `--status-good`                       | `#2F7D3B`                  | Positive deltas in the demo                           |
 
-### Escuro
+### Dark
 
 | Token                             | Hex          |
 | ---------------------------------- | ------------ |
@@ -59,16 +65,16 @@ Tailwind v4 via `@theme inline`.
 | `--status-critical`                | `#E8746A`    |
 | `--status-good`                    | `#6FCB82`    |
 
-No dark mode, `--shadow-card` vira `none` — a elevação passa a depender só do
-hairline + `surface` já ser um degrau mais claro que `background` (cards não
-"flutuam" via sombra no escuro).
+In dark mode, `--shadow-card` becomes `none` — elevation relies solely on the
+hairline + `surface` already being a step lighter than `background` (cards
+don't "float" via shadow in dark mode).
 
-### Paleta categórica (cor por caixinha)
+### Categorical palette (color per envelope)
 
-8 cores, usadas como ponto/borda-esquerda ao lado do nome da caixinha — nunca
-como único portador de significado (o nome sempre acompanha):
+8 colors, used as a dot/left-border next to the envelope's name — never as
+the sole carrier of meaning (the name is always shown alongside it):
 
-| Token     | Nome           | Claro     | Escuro    |
+| Token     | Name           | Light     | Dark      |
 | --------- | -------------- | --------- | --------- |
 | `--cat-1` | Verde Cofre    | `#2E6F4D` | `#5FAE80` |
 | `--cat-2` | Terracota      | `#C1502E` | `#E2896A` |
@@ -79,51 +85,52 @@ como único portador de significado (o nome sempre acompanha):
 | `--cat-7` | Oliva          | `#7C7A3A` | `#ACA85C` |
 | `--cat-8` | Argila Rosada  | `#B97064` | `#D69C90` |
 
-Na landing, `--cat-1`/`--cat-2`/`--cat-3` são usados pelas 3 caixinhas da demo
-(Verde Cofre/Terracota/Âmbar); os outros 5 aparecem só nas "abas de envelope"
-decorativas do hero (`--cat-4` a `--cat-7`).
+On the landing, `--cat-1`/`--cat-2`/`--cat-3` are used by the demo's 3
+envelopes (Verde Cofre/Terracota/Âmbar); the other 5 only appear in the
+hero's decorative "envelope tabs" (`--cat-4` through `--cat-7`).
 
-## Tipografia
+## Typography
 
-Carregadas via `next/font/google` em `src/app/layout.tsx` (self-hosted em build
-time — sem requisição de rede em runtime, sem trade-off de latência/offline):
+Loaded via `next/font/google` in `src/app/layout.tsx` (self-hosted at build
+time — no network request at runtime, no latency/offline trade-off):
 
-- **Fraunces** (`--font-fraunces`, pesos 400/600) — serif calorosa, usada só no
-  H1 do hero e em dois headings de seção ("Baixe o Dindin", "Como funcionam as
-  caixinhas"). Mapeada pra `--font-serif` no `@theme inline`.
-- **Work Sans** (`--font-work-sans`, pesos 400/500/600) — corpo, botões, labels,
-  em todo o resto da página. Mapeada pra `--font-sans`.
+- **Fraunces** (`--font-fraunces`, weights 400/600) — warm serif, used only
+  in the hero H1 and two section headings ("Download Dindin", "How envelopes
+  work"). Mapped to `--font-serif` in `@theme inline`.
+- **Work Sans** (`--font-work-sans`, weights 400/500/600) — body, buttons,
+  labels, everywhere else on the page. Mapped to `--font-sans`.
 
-Fraunces é reservada pra poucos headings de propósito — é o elemento que mais
-diferencia a página de um template genérico, e perde força se usada em tudo.
+Fraunces is reserved for a few purposeful headings — it's the element that
+most differentiates the page from a generic template, and loses its impact if
+used everywhere.
 
-## Forma / espaçamento
+## Shape / spacing
 
-Não há um arquivo de tokens de espaçamento dedicado (nem `tailwind.config`
-customizado) — a página usa a escala padrão do Tailwind v4 (`px-6`, `py-16`,
-`gap-4`, etc.) diretamente. Convenções observadas no código:
+There's no dedicated spacing-tokens file (nor a custom `tailwind.config`) —
+the page uses Tailwind v4's default scale (`px-6`, `py-16`, `gap-4`, etc.)
+directly. Conventions observed in the code:
 
 - **Cards:** `rounded-2xl` (16px) + `border border-border` + `shadow-card`
-  (`0 1px 3px rgba(33,26,18,.08), 0 1px 2px rgba(33,26,18,.06)` no claro, `none`
-  no escuro) — variável `--shadow-card`, classe utilitária `.shadow-card`.
-- **Botões/CTAs e pills (badge "Disponível agora", delta pill da demo):**
-  totalmente arredondados (`rounded-full`), altura mínima `h-11`/`h-12`.
-- **Inputs/selects da demo:** `rounded-xl` (12px), `h-11`.
-- **"Abas de envelope" decorativas do hero** (`.envelope-tab`, `globals.css`):
-  `border-radius: 14px 14px 6px 6px` — cantos de baixo mais retos que os de
-  cima, silhueta de envelope; sempre `aria-hidden` e ocultas abaixo de 720px.
-- **Hover em cards** (`.card-hover`): `translateY(-2px)` + transição de sombra,
-  gated por `prefers-reduced-motion: no-preference`.
-- **Foco visível:** `outline: 2px solid var(--primary)`, `outline-offset: 2px`
-  em qualquer elemento com `:focus-visible`.
+  (`0 1px 3px rgba(33,26,18,.08), 0 1px 2px rgba(33,26,18,.06)` in light,
+  `none` in dark) — `--shadow-card` variable, `.shadow-card` utility class.
+- **Buttons/CTAs and pills ("Available now" badge, demo delta pill):** fully
+  rounded (`rounded-full`), minimum height `h-11`/`h-12`.
+- **Demo inputs/selects:** `rounded-xl` (12px), `h-11`.
+- **Hero's decorative "envelope tabs"** (`.envelope-tab`, `globals.css`):
+  `border-radius: 14px 14px 6px 6px` — squarer bottom corners than top ones,
+  an envelope silhouette; always `aria-hidden` and hidden below 720px.
+- **Card hover** (`.card-hover`): `translateY(-2px)` + shadow transition,
+  gated by `prefers-reduced-motion: no-preference`.
+- **Visible focus:** `outline: 2px solid var(--primary)`,
+  `outline-offset: 2px` on any element with `:focus-visible`.
 
-## Movimento
+## Motion
 
-Toda animação/transição do arquivo é condicionada a
-`@media (prefers-reduced-motion: no-preference)` — nunca aplicada
-incondicionalmente:
+Every animation/transition in the file is conditioned on
+`@media (prefers-reduced-motion: no-preference)` — never applied
+unconditionally:
 
-- `scroll-behavior: smooth` no `html` (indicador de scroll do hero).
-- `.scroll-cue` — bounce sutil na seta do "veja como funciona".
-- `.value-pulse` — scale-up de 420ms quando um valor da demo muda.
-- `.delta-pill` — fade in/out de 250ms do "+R$ X"/"R$ -X" ao lado do valor.
+- `scroll-behavior: smooth` on `html` (hero scroll indicator).
+- `.scroll-cue` — subtle bounce on the "see how it works" arrow.
+- `.value-pulse` — 420ms scale-up when a demo value changes.
+- `.delta-pill` — 250ms fade in/out of the "+R$ X"/"R$ -X" next to the value.
