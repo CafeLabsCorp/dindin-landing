@@ -65,11 +65,11 @@ Rotas: `/pt` e `/en` (raiz `/` redireciona pro locale padrão).
 
 ## Documentação
 
-- [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) — estrutura de rotas/componentes e a
+- [`docs/ARQUITETURA.pt-br.md`](docs/ARQUITETURA.pt-br.md) — estrutura de rotas/componentes e a
   lógica de estado da demo de caixinhas.
-- [`docs/DESIGN.md`](docs/DESIGN.md) — tokens da identidade "Envelope caloroso"
+- [`docs/DESIGN.pt-br.md`](docs/DESIGN.pt-br.md) — tokens da identidade "Envelope caloroso"
   (cor, tipografia, forma).
-- [`docs/DEPLOY.md`](docs/DEPLOY.md) — deploy na Vercel e DNS de
+- [`docs/DEPLOY.pt-br.md`](docs/DEPLOY.pt-br.md) — deploy na Vercel e DNS de
   `dindin.cafelabs.net`.
 
 Não há `docs/BACKEND.md`: este repo não tem backend próprio — é site estático,
@@ -82,9 +82,9 @@ navegador).
 - [x] Botão "Web" ativo, linkando pro app real (`app.dindin.cafelabs.net`).
 - [x] Demo interativa de caixinhas (`CaixinhasDemo.tsx`).
 - [x] Padrão estrutural de landing da Café Labs aplicado (hero 100dvh, indicador de
-      scroll, acesso rápido ao produto acima da dobra) — ver `docs/ARQUITETURA.md`.
+      scroll, acesso rápido ao produto acima da dobra) — ver `docs/ARQUITETURA.pt-br.md`.
 - [x] Internacionalização PT/EN com `next-intl`, seletor no cabeçalho.
-- [x] No ar em `dindin.cafelabs.net` (Vercel) — ver `docs/DEPLOY.md`.
+- [x] No ar em `dindin.cafelabs.net` (Vercel) — ver `docs/DEPLOY.pt-br.md`.
 - [ ] Download Windows — placeholder "em breve", depende de decidir o empacotamento
       (zip vs. Inno Setup).
 - [ ] Download Android — placeholder "em breve", depende de decidir onde hospedar o
