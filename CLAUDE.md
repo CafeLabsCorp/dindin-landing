@@ -13,3 +13,9 @@ Específico deste repo pra quem trabalha aqui com um agente: a demo de
 caixinhas é 100% client-side e reseta no F5 de propósito — não adicionar
 persistência (`localStorage`, API, etc.) sem que o Felipe peça explicitamente.
 Fluxo de trabalho: commitar direto em `main`, sem branch de feature nem PR.
+
+**Mudanças futuras significativas neste projeto devem passar pelo Forge**
+(o time de agentes especializado do repo `forge`), em vez de serem feitas
+ad-hoc numa sessão avulsa — ele roteia o trabalho pro especialista certo
+(frontend, design, docs, etc.) e mantém este conjunto de docs sincronizado
+com o código.

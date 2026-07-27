@@ -15,9 +15,9 @@ esse renome, os tokens são equivalentes 1:1.
 
 ## Cor
 
-Implementados como CSS custom properties em `src/app/globals.css` (`:root` para o
-tema claro, `@media (prefers-color-scheme: dark)` para o escuro), mapeados pro
-Tailwind v4 via `@theme inline`.
+Implementados como CSS custom properties em `src/app/[locale]/globals.css`
+(`:root` para o tema claro, `@media (prefers-color-scheme: dark)` para o
+escuro), mapeados pro Tailwind v4 via `@theme inline`.
 
 ### Claro
 
@@ -87,8 +87,9 @@ decorativas do hero (`--cat-4` a `--cat-7`).
 
 ## Tipografia
 
-Carregadas via `next/font/google` em `src/app/layout.tsx` (self-hosted em build
-time — sem requisição de rede em runtime, sem trade-off de latência/offline):
+Carregadas via `next/font/google` em `src/app/[locale]/layout.tsx`
+(self-hosted em build time — sem requisição de rede em runtime, sem
+trade-off de latência/offline):
 
 - **Fraunces** (`--font-fraunces`, pesos 400/600) — serif calorosa, usada só no
   H1 do hero e em dois headings de seção ("Baixe o Dindin", "Como funcionam as
