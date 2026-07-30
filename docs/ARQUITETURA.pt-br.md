@@ -71,9 +71,11 @@ em uma função, sem estado próprio. Busca toda a copy de antemão via
    Três cards: "Web" (ativo, linka pro app), "Windows" e "Android" (ambos
    placeholder "em breve", `border-dashed`, sem link).
 4. **`<CaixinhasDemo />`** — âncora `#caixinhas`, ver seção dedicada abaixo.
-5. **Seção de features** — grid de 3 cards estáticos (receitas alocadas na
-   hora, gastos no lugar certo, backup/restauração), montada a partir do
-   namespace `Features`.
+5. **Seção de features** — grid 2x2 de 4 cards estáticos (receitas alocadas
+   na hora, gastos no lugar certo, backup/restauração, assinaturas e
+   parcelas sozinhas), montada a partir do namespace `Features`. Duas
+   colunas, e não três: o quarto card chegou depois dos três originais, e
+   num grid de 3 colunas ele ficaria sozinho numa segunda linha.
 6. **Footer** — linha de marca + link GitHub
    (`github.com/CafeLabsCorp/dindin`, o repo do app, não desta landing) e
    e-mail de contato.

@@ -1,7 +1,7 @@
 {
   "Metadata": {
     "title": "Dindin — controle financeiro por caixinhas",
-    "description": "Organize receitas e gastos em caixinhas categorizadas. App gratuito da Café Labs, disponível na web."
+    "description": "Organize receitas e gastos em caixinhas categorizadas, com assinaturas e compras parceladas lançadas sozinhas. App gratuito da Café Labs, disponível na web."
   },
   "Header": {
     "brandBy": "por Café Labs",
@@ -28,7 +28,9 @@
     "item2Title": "Gastos no lugar certo",
     "item2Description": "Todo gasto sai da caixinha correta, então você sempre sabe o que ainda pode gastar em cada categoria.",
     "item3Title": "Backup e restauração",
-    "item3Description": "Exporte todos os seus dados em JSON quando quiser, e importe de volta pra migrar entre contas."
+    "item3Description": "Exporte todos os seus dados em JSON quando quiser, e importe de volta pra migrar entre contas.",
+    "item4Title": "Assinaturas e parcelas sozinhas",
+    "item4Description": "Cadastre uma assinatura ou uma compra parcelada uma vez: cada cobrança entra com a data certa, sem você lançar mês a mês."
   },
   "Demo": {
     "title": "Como funcionam as caixinhas",

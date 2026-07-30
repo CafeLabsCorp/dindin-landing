@@ -1,7 +1,7 @@
 {
   "Metadata": {
     "title": "Dindin — budget-envelope money management",
-    "description": "Organize your income and spending into categorized budget envelopes. Free app by Café Labs, available on the web."
+    "description": "Organize your income and spending into categorized budget envelopes, with subscriptions and installment purchases posted for you. Free app by Café Labs, available on the web."
   },
   "Header": {
     "brandBy": "by Café Labs",
@@ -28,7 +28,9 @@
     "item2Title": "Spending in the right place",
     "item2Description": "Every expense comes out of the right envelope, so you always know what's left to spend in each category.",
     "item3Title": "Backup and restore",
-    "item3Description": "Export all your data as JSON whenever you want, and import it back to migrate between accounts."
+    "item3Description": "Export all your data as JSON whenever you want, and import it back to migrate between accounts.",
+    "item4Title": "Subscriptions and installments, handled",
+    "item4Description": "Set up a subscription or an installment purchase once: every charge lands on the right date, with no month-by-month data entry."
   },
   "Demo": {
     "title": "How budget envelopes work",

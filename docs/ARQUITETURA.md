@@ -68,9 +68,11 @@ single function, with no state of its own. Fetches all copy up front via
    "Android" (both "coming soon" placeholders, `border-dashed`, no link).
 4. **`<CaixinhasDemo />`** — anchor `#caixinhas`, see the dedicated section
    below.
-5. **Features section** — grid of 3 static cards (income allocated instantly,
-   spending in the right place, backup/restore), built from the `Features`
-   namespace.
+5. **Features section** — 2x2 grid of 4 static cards (income allocated
+   instantly, spending in the right place, backup/restore, subscriptions and
+   installments handled), built from the `Features` namespace. Two columns
+   rather than three: the fourth card arrived after the original three, and
+   in a 3-column grid it would sit alone on a second row.
 6. **Footer** — brand line + GitHub link (`github.com/CafeLabsCorp/dindin`,
    the app's repo, not this landing's) and contact email.
 

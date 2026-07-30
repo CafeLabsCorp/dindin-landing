@@ -28,6 +28,7 @@ export default async function Home() {
     { title: tFeatures("item1Title"), description: tFeatures("item1Description") },
     { title: tFeatures("item2Title"), description: tFeatures("item2Description") },
     { title: tFeatures("item3Title"), description: tFeatures("item3Description") },
+    { title: tFeatures("item4Title"), description: tFeatures("item4Description") },
   ];
 
   return (
@@ -141,7 +142,11 @@ export default async function Home() {
         <CaixinhasDemo />
 
         <section className="mx-auto max-w-5xl px-6 py-16">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {/* 2x2 rather than a 3-col row with a lone card trailing below it:
+              the fourth feature (assinaturas/parcelamentos) landed after the
+              original three, and 2 columns also gives each description more
+              width to breathe. */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {features.map((feature) => (
               <div
                 key={feature.title}
