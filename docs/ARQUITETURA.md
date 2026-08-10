@@ -188,6 +188,75 @@ entirely disposable by design (the same reasoning was later replicated in the
 `domo-landing` demo, which cites this implementation as an anti-reference for
 a simpler interaction, see that other repo's `docs/DESIGN.md`).
 
+## End-to-end trace: transferring between envelopes
+
+One full user interaction in `CaixinhasDemo.tsx`, from click to UI update —
+chosen over "add" or "allocate" because it's the one that exercises the most
+of the component's logic (derived source/destination selection, two envelopes
+updated in the same action).
+
+1. User clicks the "Transferir" tab-like button → `setMode("transferir")`.
+   The `formAreaRef` `useEffect` (which skips the first render so it doesn't
+   steal focus on page load) moves focus to the first control of the
+   transfer form.
+2. `eligibleOrigins` (derived from `caixinhas`, filtered to `balance > 0`)
+   determines which envelopes can appear as a source. `effectiveOrigem` /
+   `effectiveDestino` are recomputed on every render from the raw picks
+   (`transfOrigemRaw` / `transfDestinoRaw`), falling back to the first
+   eligible envelope whenever the previous pick is no longer valid.
+3. User picks source/destination in the two `select`s and types an amount
+   into `transfValor`.
+4. User submits the form → `handleTransferirSubmit(e)` runs:
+   - `e.preventDefault()`; parses `transfValor` into `val`.
+   - Validates `val > 0` and `val <= effectiveOrigem.balance`; on failure sets
+     `transfError` (rendered with `role="alert"`) and returns without
+     touching state.
+   - On success: a single `setCaixinhas` call subtracts `val` from the source
+     envelope and adds it to the destination envelope (both derived from the
+     previous `caixinhas` array in the same update).
+   - Calls `pulseById[origem].bump()` and `pulseById[destino].bump()` (from
+     `usePulse`), and `deltaById[origem].show(-val)` /
+     `deltaById[destino].show(+val)` (from `useDeltaPill`).
+   - Sets `liveMessage` describing the transfer, read by the
+     `aria-live="polite"` region for screen reader users.
+5. React re-renders both envelope cards: the new `balance` values are shown;
+   `key={pulseId}` forces each changed number to remount, restarting the
+   `.value-pulse` CSS animation; each envelope gets its own `.delta-pill`
+   (`-R$ X` / `+R$ X`) fading in and out over ~1.4s.
+6. If the source envelope's balance hits 0, it drops out of `eligibleOrigins`
+   on the next render — `effectiveOrigem` silently falls back to another
+   eligible envelope (or clears if none remain). This is how the UI prevents
+   transferring out of an empty envelope or into itself structurally, instead
+   of validating that after the fact.
+7. Nothing persists past this render: refreshing the page, or clicking
+   "Reset demo" (`handleReset`), restores `caixinhas` to the `SEED_CAIXINHAS`
+   seed.
+
+## External integrations
+
+This landing has no backend or API routes of its own — nothing here reads or
+writes through a server this repo controls. What it does talk to:
+
+- **Vercel Web Analytics** (`@vercel/analytics`, package dependency in
+  `package.json`) — mounted as `<Analytics />` in
+  `src/app/[locale]/layout.tsx`, right inside `<body>`. The official Vercel
+  package: it injects a small script that reports pageviews/web-vitals to the
+  Vercel dashboard for this project. No configuration in code — no API key,
+  no env var; it ties itself to the Vercel project server-side at deploy time
+  and is a silent no-op when running locally (`next dev`). There's nothing
+  this repo can fail on or needs to handle errors for.
+- **Outbound links to other Café Labs properties** — plain `<a target="_blank">`
+  tags in `page.tsx`, not fetched or embedded, so they can't fail on this
+  side (a dead link is a content bug, not a runtime error):
+  - `https://app.dindin.cafelabs.net` — the real Dindin web app (`WEB_APP_URL`
+    constant; the "Open Dindin on the web" hero CTA and the "Web" download
+    card).
+  - `https://cafelabs.net` — Café Labs' institutional site (the "by Café
+    Labs" header link).
+  - `https://github.com/CafeLabsCorp/dindin` — the app's own repository
+    (footer).
+  - `mailto:contato@cafelabs.net` — contact email (footer).
+
 ## Global state/data
 
 There is no global state manager (Context, Redux, Zustand, etc.) — the only

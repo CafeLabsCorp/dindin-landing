@@ -40,6 +40,23 @@ npm run dev
 Abre em `http://localhost:3000`. Outros scripts: `npm run build` (build de
 produção), `npm run start` (serve o build), `npm run lint`.
 
+## Configuração
+
+Não é preciso nenhuma variável de ambiente nem arquivo de config pra rodar
+este projeto — não há `.env*` no repo (`.env*` está no `.gitignore` como
+precaução geral, mas nada no código lê `process.env.*` hoje) nem
+`vercel.json`. A única integração de terceiro é o Vercel Web Analytics
+(`@vercel/analytics`, ver `docs/ARQUITETURA.pt-br.md` → "Integrações
+externas"), que não precisa de token em código — ativa sozinho quando o app
+é hospedado na Vercel e é um no-op rodando localmente.
+
+## Testes
+
+Não há suíte de testes automatizados neste repo (sem arquivos
+`*.test.*`/`*.spec.*`, sem config de Vitest/Jest, sem script `test` no
+`package.json`). A verificação manual antes de dar push em `main` é rodar
+`npm run lint` e `npm run build` localmente.
+
 ## Estrutura de pastas
 
 ```
@@ -74,7 +91,9 @@ Rotas: `/pt` e `/en` (raiz `/` redireciona pro locale padrão).
 
 Não há `docs/BACKEND.md`: este repo não tem backend próprio — é site estático,
 sem chamadas de API nem persistência (a demo roda inteira em memória do
-navegador).
+navegador). O pouco que ela conversa com algo externo (Vercel Analytics,
+links de saída pra outras propriedades da Café Labs) está documentado em
+`docs/ARQUITETURA.pt-br.md` → "Integrações externas".
 
 ## Status
 

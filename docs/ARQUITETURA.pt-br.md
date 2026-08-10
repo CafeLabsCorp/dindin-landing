@@ -190,6 +190,77 @@ inteiramente descartável por design (mesmo raciocínio replicado depois na
 demo do `domo-landing`, que cita esta implementação como anti-referência para
 uma interação mais simples, ver `docs/DESIGN.md` desse outro repo).
 
+## Rastreio ponta a ponta: transferir entre caixinhas
+
+Uma interação completa do usuário em `CaixinhasDemo.tsx`, do clique até a UI
+atualizar — escolhida em vez de "adicionar" ou "alocar" por ser a que
+exercita mais da lógica do componente (seleção derivada de origem/destino,
+duas caixinhas atualizadas na mesma ação).
+
+1. Usuário clica no botão tipo tab "Transferir" → `setMode("transferir")`. O
+   `useEffect` de `formAreaRef` (que pula a primeira renderização pra não
+   roubar foco no load da página) move o foco pro primeiro controle do
+   formulário de transferência.
+2. `eligibleOrigins` (derivado de `caixinhas`, filtrado por `balance > 0`)
+   determina quais caixinhas podem aparecer como origem. `effectiveOrigem` /
+   `effectiveDestino` são recalculados a cada render a partir das escolhas
+   brutas (`transfOrigemRaw` / `transfDestinoRaw`), caindo pra primeira
+   caixinha elegível sempre que a escolha anterior deixou de ser válida.
+3. Usuário escolhe origem/destino nos dois `select`s e digita um valor em
+   `transfValor`.
+4. Usuário envia o formulário → `handleTransferirSubmit(e)` roda:
+   - `e.preventDefault()`; parseia `transfValor` pra `val`.
+   - Valida `val > 0` e `val <= effectiveOrigem.balance`; em caso de falha,
+     seta `transfError` (renderizado com `role="alert"`) e retorna sem tocar
+     no estado.
+   - Em caso de sucesso: uma única chamada `setCaixinhas` subtrai `val` da
+     caixinha de origem e soma na de destino (ambas derivadas do array
+     `caixinhas` anterior, na mesma atualização).
+   - Chama `pulseById[origem].bump()` e `pulseById[destino].bump()` (de
+     `usePulse`), e `deltaById[origem].show(-val)` /
+     `deltaById[destino].show(+val)` (de `useDeltaPill`).
+   - Seta `liveMessage` descrevendo a transferência, lido pela região
+     `aria-live="polite"` pra quem usa leitor de tela.
+5. O React re-renderiza os dois cards de caixinha: os novos valores de
+   `balance` aparecem; `key={pulseId}` força cada número alterado a
+   remontar, reiniciando a animação CSS `.value-pulse`; cada caixinha ganha
+   seu próprio `.delta-pill` (`-R$ X` / `+R$ X`) com fade in/out por ~1.4s.
+6. Se o saldo da caixinha de origem zerar, ela sai de `eligibleOrigins` no
+   próximo render — `effectiveOrigem` silenciosamente cai pra outra caixinha
+   elegível (ou limpa, se não sobrar nenhuma). É assim que a UI impede
+   transferir de uma caixinha vazia ou pra ela mesma de forma estrutural, em
+   vez de validar isso depois do fato.
+7. Nada persiste além desse render: atualizar a página, ou clicar em
+   "Reiniciar demo" (`handleReset`), restaura `caixinhas` pro seed
+   `SEED_CAIXINHAS`.
+
+## Integrações externas
+
+Esta landing não tem backend nem rotas de API próprias — nada aqui lê ou
+escreve através de um servidor controlado por este repo. O que ela de fato
+conversa com algo externo:
+
+- **Vercel Web Analytics** (`@vercel/analytics`, dependência em
+  `package.json`) — montado como `<Analytics />` em
+  `src/app/[locale]/layout.tsx`, dentro do `<body>`. Pacote oficial da
+  Vercel: injeta um script pequeno que reporta pageviews/web-vitals pro
+  dashboard da Vercel deste projeto. Sem configuração em código — sem API
+  key, sem variável de ambiente; ele se associa ao projeto Vercel do lado do
+  servidor no momento do deploy, e é um no-op silencioso rodando localmente
+  (`next dev`). Não há nada aqui que este repo precise tratar como erro.
+- **Links de saída pra outras propriedades da Café Labs** — tags `<a
+  target="_blank">` simples em `page.tsx`, não são buscadas nem embutidas,
+  então não podem falhar deste lado (um link quebrado é bug de conteúdo, não
+  erro de runtime):
+  - `https://app.dindin.cafelabs.net` — o app web real do Dindin (constante
+    `WEB_APP_URL`; o CTA "Abrir Dindin na web" do hero e o card de download
+    "Web").
+  - `https://cafelabs.net` — site institucional da Café Labs (link "por
+    Café Labs" do header).
+  - `https://github.com/CafeLabsCorp/dindin` — o repositório do próprio app
+    (footer).
+  - `mailto:contato@cafelabs.net` — e-mail de contato (footer).
+
 ## Estado/dados globais
 
 Não há gerenciador de estado global (Context, Redux, Zustand etc.) — o único

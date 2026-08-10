@@ -40,6 +40,23 @@ npm run dev
 Opens at `http://localhost:3000`. Other scripts: `npm run build` (production
 build), `npm run start` (serves the build), `npm run lint`.
 
+## Configuration
+
+No environment variables or config files are required to run this project —
+there's no `.env*` file in the repo (`.env*` is `.gitignore`d as a general
+precaution, but nothing in the code reads `process.env.*` today) and no
+`vercel.json`. The only third-party integration is Vercel Web Analytics
+(`@vercel/analytics`, see `docs/ARQUITETURA.md` → "External integrations"),
+which needs no token in code — it activates automatically when the app is
+deployed on Vercel and is a no-op locally.
+
+## Tests
+
+There is no automated test suite in this repo (no `*.test.*`/`*.spec.*`
+files, no Vitest/Jest config, no `test` script in `package.json`). Manual
+verification before pushing to `main` is `npm run lint` plus `npm run build`
+locally.
+
 ## Folder structure
 
 ```
@@ -74,6 +91,9 @@ Routes: `/pt` and `/en` (root `/` redirects to the default locale).
 
 No `docs/BACKEND.md`: this repo has no backend of its own — it's a static
 site, no API calls or persistence (the demo runs entirely in browser memory).
+The few things it does talk to externally (Vercel Analytics, outbound links
+to other Café Labs properties) are documented in `docs/ARQUITETURA.md` →
+"External integrations".
 
 ## Status
 
