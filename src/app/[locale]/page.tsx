@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import CaixinhasDemo from "./CaixinhasDemo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { SiteFooter } from "./SiteFooter";
 
 const WEB_APP_URL = "https://app.dindin.cafelabs.net";
 
@@ -16,12 +17,11 @@ const heroTabs = [
 ];
 
 export default async function Home() {
-  const [tHeader, tHero, tDownload, tFeatures, tFooter] = await Promise.all([
+  const [tHeader, tHero, tDownload, tFeatures] = await Promise.all([
     getTranslations("Header"),
     getTranslations("Hero"),
     getTranslations("Download"),
     getTranslations("Features"),
-    getTranslations("Footer"),
   ]);
 
   const features = [
@@ -164,27 +164,7 @@ export default async function Home() {
         </section>
       </main>
 
-      <footer className="w-full border-t border-border">
-        <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-6 py-8 text-sm text-subtle sm:flex-row sm:justify-between">
-          <span>{tFooter("brand")}</span>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://github.com/CafeLabsCorp/dindin"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-foreground"
-            >
-              GitHub
-            </a>
-            <a
-              href="mailto:contato@cafelabs.net"
-              className="transition-colors hover:text-foreground"
-            >
-              contato@cafelabs.net
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

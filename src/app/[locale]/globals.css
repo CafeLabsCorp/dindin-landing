@@ -196,6 +196,137 @@ body {
   }
 }
 
+/* Long-form prose for the text-heavy pages (/privacidade, /termos,
+   /excluir-conta). Plain element selectors inside `.legal-doc` instead of
+   utility classes on every tag: these pages are a faithful transcription of a
+   Markdown document, and keeping the JSX free of styling makes it possible to
+   diff the page against the source .md file. */
+.legal-doc {
+  margin-top: 2rem;
+}
+
+/* The transcribed documents wrap their body in a <div lang="pt-BR">, so the
+   "no top margin on the first block" rule has to reach one level deeper too. */
+.legal-doc > :first-child,
+.legal-doc > [lang] > :first-child {
+  margin-top: 0;
+}
+
+.legal-doc h2 {
+  margin-top: 2.5rem;
+  font-family: var(--font-fraunces);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.legal-doc h3 {
+  margin-top: 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.legal-doc p {
+  margin-top: 1rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.legal-doc ul,
+.legal-doc ol {
+  margin-top: 1rem;
+  margin-left: 1.25rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.legal-doc ul {
+  list-style-type: disc;
+}
+
+.legal-doc ol {
+  list-style-type: decimal;
+}
+
+.legal-doc li + li {
+  margin-top: 0.5rem;
+}
+
+.legal-doc strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.legal-doc code {
+  border-radius: 0.25rem;
+  background: var(--primary-container);
+  padding: 0.1rem 0.35rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  color: var(--primary-container-foreground);
+  /* Long identifiers (e.g. `southamerica-east1`, a mailto address) must not
+     push the page wider than the viewport on a phone. */
+  overflow-wrap: anywhere;
+}
+
+.legal-doc a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.legal-doc a:hover {
+  opacity: 0.8;
+}
+
+.legal-doc table {
+  margin-top: 1.25rem;
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+.legal-doc th,
+.legal-doc td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.legal-doc th {
+  background: var(--surface);
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.legal-doc td {
+  color: var(--muted);
+}
+
+/* An unresolved `[CONFIRMAR: ...]` placeholder carried over from the source
+   draft. Deliberately loud: it must never read as ordinary body text. */
+.legal-doc .legal-pending {
+  margin-top: 1.25rem;
+  border-radius: 0.75rem;
+  border: 2px dashed var(--status-warning);
+  padding: 0.75rem 1rem 1rem;
+}
+
+.legal-doc .legal-pending-label {
+  margin-top: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--status-warning);
+}
+
 /* Caixinhas demo: brief scale pulse on a changed number, gated behind
    reduced-motion preference. Applied by remounting the element (via a
    changing `key`) whenever its value updates, which restarts the animation. */
