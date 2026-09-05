@@ -97,8 +97,8 @@ export default async function TermosPage({
         </p>
         <p>
           O Dindin é fornecido pela <strong>Café Labs</strong>, operada por
-          Felipe Portes Antunes (CPF 704.995.256-71) — a Café Labs ainda não
-          possui CNPJ próprio.
+          Felipe Portes Antunes — a Café Labs ainda não possui CNPJ próprio.
+          Contato: <code>contato@cafelabs.net</code>.
         </p>
 
         <h3>1.1 O que o Dindin NÃO é</h3>

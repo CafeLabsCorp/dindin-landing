@@ -100,10 +100,13 @@ export default async function PrivacidadePage({
       <div lang="pt-BR">
         <UnresolvedPlaceholder>
           <p>
-            <strong>Pendências de dado real neste documento</strong> (marcadas
-            com <code>[CONFIRMAR]</code> ao longo do texto): região do Firestore
-            do projeto <code>dindin-cafelabs</code>. Enquanto não forem
-            preenchidas, o texto está incompleto e não pode ser publicado.
+            Região do Firestore confirmada e controlador identificado. A seção{" "}
+            <strong>3.4</strong> (medição de uso via Google Analytics para
+            Firebase) foi adicionada por decisão de produto de 31/08/2026. O que
+            falta antes de publicar: a <strong>revisão por advogado(a)</strong>{" "}
+            — inclusive a base legal e a retenção da medição de uso — e a
+            implementação, no aplicativo, do fluxo de exclusão de conta (seção
+            8) e do controle Ajustes → Privacidade (seção 3.4).
           </p>
         </UnresolvedPlaceholder>
 
@@ -138,8 +141,8 @@ export default async function PrivacidadePage({
             Controlador (quem decide quais dados existem e por quê):
           </strong>
           <br />
-          Café Labs, operada por Felipe Portes Antunes (CPF 704.995.256-71) — a
-          Café Labs ainda não possui CNPJ próprio.
+          Café Labs, operada por Felipe Portes Antunes — a Café Labs ainda não
+          possui CNPJ próprio. Contato: <code>privacidade@cafelabs.net</code>.
         </p>
         <p>
           Diferentemente de outros produtos da Café Labs, aqui{" "}
@@ -159,6 +162,11 @@ export default async function PrivacidadePage({
               Firestore)
             </strong>{" "}
             — hospeda a sua conta e as suas anotações financeiras.
+          </li>
+          <li>
+            <strong>Google LLC (Google Analytics para Firebase)</strong> —
+            processa a medição de uso agregada descrita na seção 3.4. Não
+            recebe nenhuma anotação financeira sua.
           </li>
           <li>
             <strong>Vercel Inc.</strong> — hospeda apenas o site de apresentação{" "}
@@ -288,7 +296,59 @@ export default async function PrivacidadePage({
           </li>
         </ul>
 
-        <h3>3.4 O que NÃO é coletado</h3>
+        <h3>3.4 Dados de uso (medição do aplicativo)</h3>
+        <p>
+          O aplicativo usa o <strong>Google Analytics para Firebase</strong>{" "}
+          para entender, de forma agregada, se as pessoas que instalam o Dindin
+          realmente conseguem usá-lo e voltam a usá-lo — e assim decidir o que
+          melhorar. Essa medição é <strong>deliberadamente reduzida</strong>:
+        </p>
+        <ul>
+          <li>
+            <strong>Identificador de instância do app</strong>: um código
+            gerado pelo Firebase, ligado à instalação do app naquele aparelho
+            (não à sua identidade). Você pode zerá-lo apagando os dados do app
+            ou reinstalando.
+          </li>
+          <li>
+            <strong>Localização aproximada</strong>: país e, no máximo,
+            região/estado, deduzidos do endereço IP. <strong>Não</strong> é GPS
+            e <strong>não</strong> identifica cidade nem endereço.
+          </li>
+          <li>
+            <strong>Aparelho e versão</strong>: modelo do aparelho, versão do
+            sistema operacional, versão do Dindin, idioma.
+          </li>
+          <li>
+            <strong>Eventos de uso</strong>: telas visitadas e um conjunto
+            pequeno de ações sem conteúdo financeiro — por exemplo &quot;conta
+            criada&quot;, &quot;primeira caixinha criada&quot;, &quot;primeiro
+            gasto lançado&quot;, &quot;exportação usada&quot; — além de dados de
+            sessão e a informação derivada de se você voltou ao app nos dias
+            seguintes.
+          </li>
+        </ul>
+        <p>
+          O que <strong>não</strong> entra nessa medição: o{" "}
+          <strong>conteúdo</strong> das suas anotações (valores, nomes de
+          caixinhas, descrições, saldos), o seu e-mail, o seu nome e o seu UID.
+          Os eventos registram que uma ação aconteceu, nunca os dados que você
+          digitou.
+        </p>
+        <p>
+          A coleta do <strong>identificador de publicidade do aparelho</strong>{" "}
+          (<code>Advertising ID</code>) e os &quot;sinais do Google&quot; ficam{" "}
+          <strong>desligados</strong>. Esses dados <strong>não</strong> são
+          usados para anúncios, não são combinados com dados de outros apps ou
+          sites, e não são vendidos.
+        </p>
+        <p>
+          <strong>Você pode desligar essa medição</strong> dentro do
+          aplicativo, em Ajustes → Privacidade, a qualquer momento e sem perder
+          nenhuma função.
+        </p>
+
+        <h3>3.5 O que NÃO é coletado</h3>
         <p>
           Por decisão de projeto, o Dindin <strong>não</strong> coleta e{" "}
           <strong>não</strong> pede:
@@ -302,22 +362,24 @@ export default async function PrivacidadePage({
           <li>
             Conexão com banco, Open Finance, importação de fatura ou extrato
           </li>
-          <li>Localização/GPS, contatos da agenda, fotos, câmera, microfone</li>
+          <li>
+            Localização por GPS, contatos da agenda, fotos, câmera, microfone
+          </li>
           <li>Dados de saúde ou qualquer outro dado pessoal sensível</li>
         </ul>
         <p>
-          O aplicativo{" "}
+          Fora o Google Analytics para Firebase descrito no item 3.4 (medição
+          de uso própria, sem identificador de publicidade), o aplicativo{" "}
           <strong>
-            não contém SDK de analytics, de publicidade ou de rastreamento de
-            terceiros
+            não contém SDK de publicidade nem de rastreamento de terceiros
           </strong>
           , não exibe anúncios e não compartilha dados com redes de anúncios.
-          Isso é verificável: as dependências do app estão públicas em{" "}
-          <code>pubspec.yaml</code>, no repositório do projeto.
+          As dependências do app estão públicas em <code>pubspec.yaml</code>, no
+          repositório do projeto.
         </p>
 
         <h3>
-          3.5 Site de apresentação (<code>dindin.cafelabs.net</code>)
+          3.6 Site de apresentação (<code>dindin.cafelabs.net</code>)
         </h3>
         <p>
           O site de apresentação é apenas informativo — <strong>não</strong> dá
@@ -375,16 +437,24 @@ export default async function PrivacidadePage({
               <td>e-mail</td>
             </tr>
             <tr>
+              <td>
+                Entender de forma agregada se o app é usado e se você volta a
+                usá-lo, para decidir o que melhorar
+              </td>
+              <td>dados de uso da seção 3.4</td>
+            </tr>
+            <tr>
               <td>Medir audiência do site de apresentação, de forma agregada</td>
-              <td>dados agregados da seção 3.5</td>
+              <td>dados agregados da seção 3.6</td>
             </tr>
           </tbody>
         </table>
         <p>
           Os dados <strong>não</strong> são usados para: propaganda, marketing,
-          venda, perfilamento, análise de crédito, score, ou compartilhamento
-          com bancos, seguradoras, empregadores, lojas ou qualquer terceiro
-          comercial.
+          venda, perfilamento comercial, análise de crédito, score, ou
+          compartilhamento com bancos, seguradoras, empregadores, lojas ou
+          qualquer terceiro comercial. A medição de uso da seção 3.4 é de
+          produto e não cria um perfil comercial ou publicitário seu.
         </p>
         <p>
           <strong>O Dindin não envia mensagens promocionais.</strong> Hoje o
@@ -439,6 +509,13 @@ export default async function PrivacidadePage({
               <td>art. 7º, II — cumprimento de obrigação legal</td>
             </tr>
             <tr>
+              <td>Medição de uso do aplicativo (seção 3.4)</td>
+              <td>
+                art. 7º, IX — legítimo interesse na melhoria do produto, sem
+                uso publicitário e com opção de desligar no app
+              </td>
+            </tr>
+            <tr>
               <td>Medição agregada do site de apresentação</td>
               <td>
                 art. 7º, IX — legítimo interesse, sem identificação individual
@@ -468,62 +545,35 @@ export default async function PrivacidadePage({
           , no projeto <code>dindin-cafelabs</code>.
         </p>
 
-        <UnresolvedPlaceholder>
-          <p>
-            <code>
-              [CONFIRMAR: região do banco de dados Firestore do projeto
-              dindin-cafelabs]
-            </code>
-          </p>
-          <p>
-            Enquanto a região não for confirmada, as duas hipóteses abaixo
-            permanecem no texto — o documento{" "}
-            <strong>ainda não afirma</strong> se há ou não transferência
-            internacional das suas anotações financeiras.
-          </p>
-        </UnresolvedPlaceholder>
-
-        <ul>
-          <li>
-            <strong>
-              Se a região for <code>southamerica-east1</code> (São Paulo,
-              Brasil):
-            </strong>{" "}
-            as suas anotações financeiras ficam armazenadas em território
-            nacional. O Google, como operador, pode acessá-las a partir de
-            outros países exclusivamente para suporte técnico e operação da
-            infraestrutura, sob os compromissos contratuais de proteção de dados
-            do Google Cloud — hipótese do art. 33, II, da LGPD (cláusulas
-            contratuais).
-          </li>
-          <li>
-            <strong>
-              Se a região for qualquer outra (por exemplo <code>nam5</code>,
-              Estados Unidos):
-            </strong>{" "}
-            há <strong>transferência internacional de dados</strong>. Nesse
-            caso, as suas anotações financeiras são armazenadas fora do Brasil,
-            em infraestrutura do Google, e a transferência se apoia no art. 33,
-            II, da LGPD (cláusulas contratuais padrão firmadas com o Google
-            Cloud/Firebase), com as garantias do &quot;Cloud Data Processing
-            Addendum&quot; do Google.
-          </li>
-        </ul>
         <p>
-          O Firebase Authentication opera em infraestrutura global do Google,
+          O banco de dados Firestore do projeto <code>dindin-cafelabs</code>{" "}
+          está na região <code>southamerica-east1</code> (São Paulo, Brasil) —
+          confirmado em 31 de agosto de 2026. As suas anotações financeiras
+          ficam armazenadas <strong>em território nacional</strong>. O Google,
+          como operador, pode acessá-las a partir de outros países
+          exclusivamente para suporte técnico e operação da infraestrutura, sob
+          os compromissos contratuais de proteção de dados do Google Cloud
+          (&quot;Cloud Data Processing Addendum&quot;) — hipótese do art. 33,
+          II, da LGPD (cláusulas contratuais).
+        </p>
+        <p>
+          O Firebase Authentication e o Google Analytics para Firebase (medição
+          de uso da seção 3.4) operam em infraestrutura global do Google,
           independentemente da região escolhida para o Firestore — ou seja,{" "}
           <strong>
-            os dados da sua conta (e-mail e credencial) trafegam e podem ser
-            armazenados fora do Brasil
-          </strong>{" "}
-          em qualquer cenário, sob a mesma hipótese do art. 33, II.
+            os dados da sua conta (e-mail e credencial) e os dados de uso da
+            seção 3.4 trafegam e podem ser armazenados fora do Brasil
+          </strong>
+          , sob a mesma hipótese do art. 33, II (cláusulas contratuais padrão
+          do Google, &quot;Cloud Data Processing Addendum&quot;). Os dados de
+          uso não incluem o conteúdo das suas anotações financeiras.
         </p>
         <p>
           O site de apresentação é hospedado na Vercel, com servidores fora do
           Brasil, mas o site{" "}
           <strong>não recebe nenhum dado financeiro nem dado de conta</strong>;
           a única informação que sai do país por ali é a medição agregada e não
-          identificável descrita no item 3.5.
+          identificável descrita no item 3.6.
         </p>
 
         <h2>7. Por quanto tempo os dados ficam guardados</h2>
@@ -574,6 +624,14 @@ export default async function PrivacidadePage({
               <td>Registros técnicos de operação/segurança</td>
               <td>conforme a retenção do provedor (Google Firebase)</td>
             </tr>
+            <tr>
+              <td>Dados de uso do aplicativo (seção 3.4)</td>
+              <td>
+                retenção mínima do Google Analytics para Firebase —{" "}
+                <strong>2 meses</strong> para os dados ligados à instância;
+                relatórios agregados sem prazo
+              </td>
+            </tr>
           </tbody>
         </table>
         <p>
@@ -621,7 +679,8 @@ export default async function PrivacidadePage({
           </li>
           <li>
             <strong>Se opor</strong> a um tratamento que você considere
-            irregular
+            irregular — inclusive <strong>desligar a medição de uso</strong> da
+            seção 3.4 em Ajustes → Privacidade, sem perder nenhuma função do app
           </li>
           <li>
             <strong>Reclamar</strong> à ANPD (Autoridade Nacional de Proteção de
@@ -638,12 +697,10 @@ export default async function PrivacidadePage({
 
         <UnresolvedPlaceholder>
           <p>
-            <code>
-              [CONFIRMAR: o procedimento abaixo descreve o comportamento
-              pretendido do fluxo de exclusão; ele ainda NÃO está implementado
-              no aplicativo. Ver seção &quot;Requisitos de implementação&quot; do
-              relatório de compliance.]
-            </code>
+            A política de exclusão abaixo foi definida (exclusão imediata e
+            definitiva, com exportação oferecida antes de confirmar), mas o
+            fluxo <strong>ainda não está implementado no aplicativo</strong> —
+            é o próximo passo do desenvolvimento.
           </p>
         </UnresolvedPlaceholder>
 
@@ -756,7 +813,7 @@ export default async function PrivacidadePage({
 
         <h2>12. Contato</h2>
         <p>
-          Café Labs — Felipe Portes Antunes (CPF 704.995.256-71)
+          Café Labs — Felipe Portes Antunes
           <br />
           E-mail:{" "}
           <a href="mailto:privacidade@cafelabs.net">privacidade@cafelabs.net</a>

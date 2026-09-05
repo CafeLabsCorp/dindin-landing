@@ -28,42 +28,33 @@ export const LEGAL_DOCS_DATE = "27 de agosto de 2026";
 // `true`. Remove an entry only when the underlying question is actually
 // answered — not when the page merely stops mentioning it.
 export const PUBLICATION_BLOCKERS: string[] = [
-  // 1. Unresolved [CONFIRMAR] in the source draft, section 6. Nobody has
-  //    confirmed the Firestore region of the `dindin-cafelabs` project, and
-  //    the answer changes the text: `southamerica-east1` means the data stays
-  //    in Brazil, anything else means there IS an international transfer.
-  //    The page renders both branches verbatim, flagged as unresolved — no
-  //    value was invented here.
-  "Política de Privacidade §6: região do Firestore do projeto `dindin-cafelabs` " +
-    "ainda não confirmada — o texto publica as duas hipóteses (transferência " +
-    "internacional ou não) em vez de uma afirmação.",
-
-  // 2. Unresolved [CONFIRMAR] in the source draft, section 8: the deletion
-  //    procedure describes intended behaviour of a flow that is not yet
-  //    implemented in the app.
+  // The deletion procedure in section 8 describes the behaviour of a flow that
+  // is not yet built in the app. The policy (immediate hard delete, export
+  // offered beforehand) was ratified on 2026-08-31, but the in-app screen and
+  // public /excluir-conta flow still have to be implemented before the page
+  // can claim this works. Clears when the mobile app ships the deletion UI.
   "Política de Privacidade §8: o fluxo de exclusão de conta descrito " +
     "(Ajustes → Excluir conta) ainda não está implementado no aplicativo.",
 
-  // 3. Found by the frontend pass, not present in the compliance draft:
-  //    next-intl's middleware sets a `NEXT_LOCALE` cookie (functional, no
-  //    tracking, no cross-site identifier) when the visitor's locale differs
-  //    from what Accept-Language would pick, and whenever the language toggle
-  //    is used. Section 3.5 currently states, without qualification, that the
-  //    site sets no cookie. That sentence needs either a carve-out for the
-  //    language-preference cookie or `localeCookie: false` in
-  //    `src/i18n/routing.ts`. Not decided unilaterally here — see the report.
-  "Política de Privacidade §3.5: afirma que o site não usa cookie, mas o " +
-    "middleware do next-intl grava um cookie funcional `NEXT_LOCALE` de " +
-    "preferência de idioma. Corrigir o texto ou desligar o cookie.",
+  // New section 3.4 (Google Analytics para Firebase, minimal instrumentation —
+  // product decision of 2026-08-31). Two open [CONFIRMAR] for the lawyer:
+  // whether the usage measurement rests on legitimate interest + opt-out or
+  // needs opt-in consent, and the retention window to pin in the console. Also
+  // the in-app "Ajustes → Privacidade" toggle it promises is not built yet.
+  "Política de Privacidade §3.4: medição de uso via Firebase Analytics — " +
+    "advogado(a) precisa confirmar a base legal (legítimo interesse + opt-out " +
+    "vs. consentimento) e o prazo de retenção; o controle in-app ainda não existe.",
 
-  // 4. The drafts print Felipe's CPF in full (privacidade §2 and §12, termos
-  //    §1) on what will be a public, indexable page. That is a deliberate
-  //    identification choice for a controller without CNPJ, but it is also a
-  //    personal identifier of a natural person exposed to the open web — a
-  //    call for the lawyer, not for this repo.
-  "Publicação do CPF completo do controlador em página pública indexável: " +
-    "confirmar com advogado(a) se é necessário identificar assim ou se nome " +
-    "completo + e-mail bastam.",
+  // Resolved and removed from this list on 2026-08-31:
+  //  - §6 Firestore region: confirmed `southamerica-east1` (São Paulo) — the
+  //    text now states plainly that data stays in Brazil, no international
+  //    transfer of the financial notes.
+  //  - §3.5 no-cookie claim: `localeCookie: false` set in `src/i18n/routing.ts`,
+  //    so next-intl no longer writes the `NEXT_LOCALE` cookie. Claim is true.
+  //  - Controller CPF on a public page: Felipe decided full name + e-mail is
+  //    enough; the CPF was removed from both drafts and both landing pages.
+  //    (Still worth a line to the lawyer to confirm this identifies the
+  //    controller sufficiently under the LGPD.)
 ];
 
 if (LEGAL_DOCS_APPROVED && PUBLICATION_BLOCKERS.length > 0) {
