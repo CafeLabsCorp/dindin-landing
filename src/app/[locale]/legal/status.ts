@@ -36,15 +36,6 @@ export const PUBLICATION_BLOCKERS: string[] = [
   "Política de Privacidade §8: o fluxo de exclusão de conta descrito " +
     "(Ajustes → Excluir conta) ainda não está implementado no aplicativo.",
 
-  // New section 3.4 (Google Analytics para Firebase, minimal instrumentation —
-  // product decision of 2026-08-31). Two open [CONFIRMAR] for the lawyer:
-  // whether the usage measurement rests on legitimate interest + opt-out or
-  // needs opt-in consent, and the retention window to pin in the console. Also
-  // the in-app "Ajustes → Privacidade" toggle it promises is not built yet.
-  "Política de Privacidade §3.4: medição de uso via Firebase Analytics — " +
-    "advogado(a) precisa confirmar a base legal (legítimo interesse + opt-out " +
-    "vs. consentimento) e o prazo de retenção; o controle in-app ainda não existe.",
-
   // Resolved and removed from this list on 2026-08-31:
   //  - §6 Firestore region: confirmed `southamerica-east1` (São Paulo) — the
   //    text now states plainly that data stays in Brazil, no international
@@ -55,6 +46,13 @@ export const PUBLICATION_BLOCKERS: string[] = [
   //    enough; the CPF was removed from both drafts and both landing pages.
   //    (Still worth a line to the lawyer to confirm this identifies the
   //    controller sufficiently under the LGPD.)
+  //
+  // Resolved and removed from this list on 2026-09-22 (lawyer review, B4/
+  // decision 6, approved):
+  //  - §3.4 Google Analytics para Firebase: legal basis (legítimo interesse +
+  //    opt-out) and retention window confirmed by the lawyer. The in-app
+  //    "Ajustes → Privacidade" opt-out toggle it promises is already shipped
+  //    (`settings_page.dart`, `analyticsOptOutProvider`).
 ];
 
 if (LEGAL_DOCS_APPROVED && PUBLICATION_BLOCKERS.length > 0) {
