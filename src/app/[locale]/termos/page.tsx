@@ -3,15 +3,16 @@ import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { LegalPageShell } from "../legal/LegalPageShell";
-import { DraftNotice, PtOnlyNotice, UnresolvedPlaceholder } from "../legal/Notices";
+import { DraftNotice, PtOnlyNotice } from "../legal/Notices";
 import { LEGAL_DOCS_APPROVED, LEGAL_DOCS_DATE, LEGAL_DOCS_VERSION } from "../legal/status";
 
-// Content transcribed from dindin/legal/termos-de-uso.md (Versão 0.1 — MINUTA
-// de 27 de agosto de 2026). Markdown → semantic HTML only; no wording added,
-// removed or reworded. See ../privacidade/page.tsx for the note on which parts
-// of the source file are intentionally left off the page (the internal
-// publishing blockquote) and which are kept (the closing "Aviso de
-// elaboração", still true here) — same reasoning applies.
+// Content transcribed from dindin/legal/termos-de-uso.md (Versão 1.0 —
+// vigente desde 22 de setembro de 2026, revisados e aprovados por advogado(a)
+// em 22/09/2026). Markdown → semantic HTML only; no wording added, removed or
+// reworded. See ../privacidade/page.tsx for the note on which parts of the
+// source file are intentionally left off the page (the internal publishing
+// blockquote) — same reasoning applies. The closing "Aviso de elaboração" was
+// removed on 22/09/2026, when the lawyer's review closed it out.
 //
 // `noindex, nofollow` and a draft banner while LEGAL_DOCS_APPROVED is false.
 // See ../legal/status.ts.
@@ -69,9 +70,7 @@ export default async function TermosPage({
       title={tLegal("termsTitle")}
       subtitle={
         <>
-          Versão {LEGAL_DOCS_VERSION} — MINUTA de {LEGAL_DOCS_DATE}
-          <br />
-          Status: não revisados por advogado(a).
+          Versão {LEGAL_DOCS_VERSION} — vigente desde {LEGAL_DOCS_DATE}
         </>
       }
       notices={
@@ -353,22 +352,6 @@ export default async function TermosPage({
           <a href="mailto:privacidade@cafelabs.net">privacidade@cafelabs.net</a>{" "}
           (privacidade e dados pessoais).
         </p>
-
-        <UnresolvedPlaceholder variant="notice">
-          <p>
-            <strong>Aviso de elaboração:</strong> esta minuta foi redigida com
-            apoio de IA a partir do escopo real do produto. Ela{" "}
-            <strong>não substitui a revisão de advogado(a)</strong>. Cláusulas
-            de limitação de responsabilidade em aplicativo financeiro e em
-            relação de consumo são justamente as que mais dependem de revisão
-            jurídica para efetivamente proteger — não presuma que este texto já
-            protege. Em especial, precisam de olhar profissional: a seção 6
-            (limitação de responsabilidade por decisão financeira), a seção 1.1
-            (afirmação de não ser instituição financeira / não estar sujeito a
-            regulação do Banco Central) e a seção 5 (ausência de garantia em
-            relação de consumo).
-          </p>
-        </UnresolvedPlaceholder>
       </div>
     </LegalPageShell>
   );

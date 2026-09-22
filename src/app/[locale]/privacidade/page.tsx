@@ -2,29 +2,28 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { LegalPageShell } from "../legal/LegalPageShell";
-import { DraftNotice, PtOnlyNotice, UnresolvedPlaceholder } from "../legal/Notices";
+import { DraftNotice, PtOnlyNotice } from "../legal/Notices";
 import { LEGAL_DOCS_APPROVED, LEGAL_DOCS_DATE, LEGAL_DOCS_VERSION } from "../legal/status";
 
-// Content transcribed from dindin/legal/politica-de-privacidade.md (Versão 0.1
-// — MINUTA de 27 de agosto de 2026). This is a Markdown → semantic HTML
-// conversion only: no wording was added, removed or reworded, and the
-// document's own `[CONFIRMAR: ...]` placeholders were NOT filled in — they are
-// rendered through <UnresolvedPlaceholder>, which makes them visually
-// impossible to mistake for finished text (see ../legal/Notices.tsx).
+// Content transcribed from dindin/legal/politica-de-privacidade.md (Versão 1.0
+// — vigente desde 22 de setembro de 2026, revisada e aprovada por advogado(a)
+// em 22/09/2026). This is a Markdown → semantic HTML conversion only: no
+// wording was added, removed or reworded.
 //
 // Differences from the source file, all deliberate and none of them edits to
 // the legal text:
-//   - The first blockquote (internal publishing/versioning notes: "Publicação
+//   - The blockquote with internal publishing/versioning notes ("Publicação
 //     prevista: ...", "Também deve ficar acessível de dentro do aplicativo")
-//     is internal process, not part of the policy, and is left out.
-//   - The second blockquote (the list of open `[CONFIRMAR]` items) IS kept,
-//     at the top of the document, because it tells the reader the text is
-//     incomplete.
-//   - The closing "Aviso de elaboração" is kept verbatim — unlike Micare's, it
-//     is still true here, and dropping it would be the one edit that makes the
-//     page read as more finished than it is.
+//     is internal process, not part of the policy, and is left out. Same for
+//     the "Nota de implementação" blockquote in section 8, which the source
+//     file itself marks as not part of the public text.
 //   - Decorative warning emoji from the Markdown are dropped; the emphasis
 //     they carried is preserved by the surrounding <strong>.
+//
+// The draft-stage markers (the open `[CONFIRMAR]` list, the "fluxo de exclusão
+// ainda não implementado" note and the closing "Aviso de elaboração") were
+// removed on 22/09/2026: the lawyer's review closed the open items and the
+// account-deletion flow shipped in the app.
 //
 // The page is `noindex, nofollow` and carries a draft banner while
 // LEGAL_DOCS_APPROVED is false. See ../legal/status.ts.
@@ -85,9 +84,7 @@ export default async function PrivacidadePage({
       title={tLegal("privacyTitle")}
       subtitle={
         <>
-          Versão {LEGAL_DOCS_VERSION} — MINUTA de {LEGAL_DOCS_DATE}
-          <br />
-          Status: não revisada por advogado(a).
+          Versão {LEGAL_DOCS_VERSION} — vigente desde {LEGAL_DOCS_DATE}
         </>
       }
       notices={
@@ -98,18 +95,6 @@ export default async function PrivacidadePage({
       }
     >
       <div lang="pt-BR">
-        <UnresolvedPlaceholder>
-          <p>
-            Região do Firestore confirmada e controlador identificado. A seção{" "}
-            <strong>3.4</strong> (medição de uso via Google Analytics para
-            Firebase) foi adicionada por decisão de produto de 31/08/2026. O que
-            falta antes de publicar: a <strong>revisão por advogado(a)</strong>{" "}
-            — inclusive a base legal e a retenção da medição de uso — e a
-            implementação, no aplicativo, do fluxo de exclusão de conta (seção
-            8) e do controle Ajustes → Privacidade (seção 3.4).
-          </p>
-        </UnresolvedPlaceholder>
-
         <h2>1. Em linguagem simples</h2>
         <p>
           O Dindin é um caderno digital de finanças pessoais. Você anota o que
@@ -695,15 +680,6 @@ export default async function PrivacidadePage({
 
         <h3>Exclusão da conta — o que acontece na prática</h3>
 
-        <UnresolvedPlaceholder>
-          <p>
-            A política de exclusão abaixo foi definida (exclusão imediata e
-            definitiva, com exportação oferecida antes de confirmar), mas o
-            fluxo <strong>ainda não está implementado no aplicativo</strong> —
-            é o próximo passo do desenvolvimento.
-          </p>
-        </UnresolvedPlaceholder>
-
         <ol>
           <li>
             Você pede a exclusão de dentro do aplicativo (Ajustes → Excluir
@@ -828,18 +804,6 @@ export default async function PrivacidadePage({
             gov.br/anpd
           </a>
         </p>
-
-        <UnresolvedPlaceholder variant="notice">
-          <p>
-            <strong>Aviso de elaboração:</strong> esta minuta foi redigida com
-            apoio de IA a partir do inventário real de dados do produto (esquema
-            do Firestore, serviços de autenticação e dependências efetivamente
-            usadas). Ela <strong>não substitui a revisão de advogado(a)</strong>{" "}
-            e não deve ser publicada, vinculada no Google Play nem apresentada a
-            usuário antes dessa revisão. Diferentemente do Micare, o texto do
-            Dindin <strong>ainda não passou por advogado(a)</strong>.
-          </p>
-        </UnresolvedPlaceholder>
       </div>
     </LegalPageShell>
   );

@@ -1,41 +1,30 @@
 // Publication gate for the Dindin legal documents (/privacidade, /termos).
 //
-// Unlike Micare's, the Dindin legal texts have NOT been reviewed by a lawyer.
-// The source drafts (dindin/legal/*.md) are marked "Versão 0.1 — MINUTA" and
-// carry an explicit instruction not to publish, not to link from the Google
-// Play listing and not to present them to a user before legal review.
+// The lawyer reviewed the drafts (dindin/legal/*.md) as a delta of the
+// Micare review (approved 2026-08-21) and approved them on 2026-09-22
+// (B4/decision 6). The account-deletion flow they describe (§8) also shipped
+// in the app before this flag flipped (`2dac928`, tested).
 //
-// The pages are built and transcribed in full so the review can happen on the
-// real thing, but everything that would make them read as finished text is
-// driven from this single flag:
+// The pages are built and transcribed in full, and everything that makes
+// them read as finished text is driven from this single flag:
 //
 //   - LEGAL_DOCS_APPROVED === false  →  every legal page renders a prominent
 //     "MINUTA" notice as its first content and sends `noindex, nofollow`.
-//   - Flipping it to `true` is the ONLY change needed the day the lawyer
-//     signs off — nothing else in the pages hardcodes the draft status.
+//   - LEGAL_DOCS_APPROVED === true   →  no draft banner, pages are indexable.
 //
 // The flag cannot be flipped while anything in PUBLICATION_BLOCKERS is still
 // open: the assertion at the bottom of this file throws at module evaluation,
-// which fails `next build`. This is deliberate — the drafts contain at least
-// one unresolved `[CONFIRMAR]` placeholder, and an unresolved placeholder must
+// which fails `next build`. This is deliberate — an unresolved blocker must
 // not be able to ship silently as if it were finished text.
-export const LEGAL_DOCS_APPROVED: boolean = false;
+export const LEGAL_DOCS_APPROVED: boolean = true;
 
-export const LEGAL_DOCS_VERSION = "0.1";
-export const LEGAL_DOCS_DATE = "27 de agosto de 2026";
+export const LEGAL_DOCS_VERSION = "1.0";
+export const LEGAL_DOCS_DATE = "22 de setembro de 2026";
 
 // Everything that has to be resolved before LEGAL_DOCS_APPROVED can become
 // `true`. Remove an entry only when the underlying question is actually
 // answered — not when the page merely stops mentioning it.
 export const PUBLICATION_BLOCKERS: string[] = [
-  // The deletion procedure in section 8 describes the behaviour of a flow that
-  // is not yet built in the app. The policy (immediate hard delete, export
-  // offered beforehand) was ratified on 2026-08-31, but the in-app screen and
-  // public /excluir-conta flow still have to be implemented before the page
-  // can claim this works. Clears when the mobile app ships the deletion UI.
-  "Política de Privacidade §8: o fluxo de exclusão de conta descrito " +
-    "(Ajustes → Excluir conta) ainda não está implementado no aplicativo.",
-
   // Resolved and removed from this list on 2026-08-31:
   //  - §6 Firestore region: confirmed `southamerica-east1` (São Paulo) — the
   //    text now states plainly that data stays in Brazil, no international
@@ -53,6 +42,9 @@ export const PUBLICATION_BLOCKERS: string[] = [
   //    opt-out) and retention window confirmed by the lawyer. The in-app
   //    "Ajustes → Privacidade" opt-out toggle it promises is already shipped
   //    (`settings_page.dart`, `analyticsOptOutProvider`).
+  //  - §8 account deletion: the self-service flow (Ajustes → Excluir conta,
+  //    immediate hard delete with export offered beforehand) shipped and was
+  //    tested (`2dac928`, 345 Dart tests + 111 rules tests green).
 ];
 
 if (LEGAL_DOCS_APPROVED && PUBLICATION_BLOCKERS.length > 0) {
