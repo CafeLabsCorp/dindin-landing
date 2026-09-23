@@ -65,6 +65,11 @@
     "announceTransferred": "Transferido {amount} de {origem} para {destino}.",
     "announceReset": "Demo reiniciada."
   },
+  "NotFound": {
+    "title": "Página não encontrada",
+    "description": "A página que você está procurando não existe ou foi movida.",
+    "backHome": "Voltar para o início"
+  },
   "Footer": {
     "brand": "Dindin — um produto Café Labs",
     "navLabel": "Links do rodapé",

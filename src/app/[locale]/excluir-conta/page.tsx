@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
+import { BASE_URL } from "@/lib/site";
 import { LegalPageShell } from "../legal/LegalPageShell";
 
 // Public account-deletion page. Required by Google Play for any app that
@@ -20,7 +21,6 @@ import { LegalPageShell } from "../legal/LegalPageShell";
 // Two independent pathways on purpose: the in-app one (Ajustes → Excluir
 // conta) and an email request that works for anyone who can't reach the app —
 // locked out, uninstalled, or on an app version that predates the in-app flow.
-const BASE_URL = "https://dindin.cafelabs.net";
 const PRIVACY_EMAIL = "privacidade@cafelabs.net";
 const GENERAL_EMAIL = "contato@cafelabs.net";
 const WEB_APP_URL = "https://app.dindin.cafelabs.net";
@@ -54,9 +54,12 @@ export async function generateMetadata({
       siteName: "Dindin",
       locale: locale === "pt" ? "pt_BR" : "en_US",
       type: "website",
+      // See ../privacidade/page.tsx for why this is explicit rather than
+      // relying on the `[locale]/opengraph-image.tsx` file convention.
+      images: [{ url: `${BASE_URL}/${locale}/opengraph-image`, width: 1200, height: 630 }],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: t("title"),
       description: t("metaDescription"),
     },

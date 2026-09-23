@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { BASE_URL } from "@/lib/site";
 import { LegalPageShell } from "../legal/LegalPageShell";
 import { DraftNotice, PtOnlyNotice } from "../legal/Notices";
 import { LEGAL_DOCS_APPROVED, LEGAL_DOCS_DATE, LEGAL_DOCS_VERSION } from "../legal/status";
@@ -27,7 +28,6 @@ import { LEGAL_DOCS_APPROVED, LEGAL_DOCS_DATE, LEGAL_DOCS_VERSION } from "../leg
 //
 // The page is `noindex, nofollow` and carries a draft banner while
 // LEGAL_DOCS_APPROVED is false. See ../legal/status.ts.
-const BASE_URL = "https://dindin.cafelabs.net";
 
 export async function generateMetadata({
   params,
@@ -62,9 +62,16 @@ export async function generateMetadata({
       siteName: "Dindin",
       locale: locale === "pt" ? "pt_BR" : "en_US",
       type: "website",
+      // A page-level `openGraph` object here means the shared
+      // `[locale]/opengraph-image.tsx` file convention no longer attaches
+      // itself automatically (confirmed empirically: it only auto-attaches
+      // when nothing in the tree already defines `openGraph`) — so it's
+      // pointed at explicitly instead, reusing the same card as the rest of
+      // the site rather than drawing a page-specific one.
+      images: [{ url: `${BASE_URL}/${locale}/opengraph-image`, width: 1200, height: 630 }],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: tLegal("privacyTitle"),
       description: tLegal("privacyMetaDescription"),
     },

@@ -5,6 +5,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { BASE_URL } from "@/lib/site";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -30,9 +31,38 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata" });
+
+  // Base for resolving any relative URL in metadata across this whole route
+  // tree (icons, the `opengraph-image.tsx` file convention, etc.) — 2026-09-22
+  // public-site audit item. The home route itself also gets full canonical +
+  // hreflang + Open Graph/Twitter tags here, same pattern already used by
+  // /privacidade, /termos and /excluir-conta.
+  const languages = Object.fromEntries(routing.locales.map((l) => [l, `${BASE_URL}/${l}`]));
+
   return {
+    metadataBase: new URL(BASE_URL),
     title: t("title"),
     description: t("description"),
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        ...languages,
+        "x-default": `${BASE_URL}/${routing.defaultLocale}`,
+      },
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: `${BASE_URL}/${locale}`,
+      siteName: "Dindin",
+      locale: locale === "pt" ? "pt_BR" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+    },
   };
 }
 
