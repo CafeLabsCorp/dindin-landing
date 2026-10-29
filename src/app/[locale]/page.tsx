@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import CaixinhasDemo from "./CaixinhasDemo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 import { SiteFooter } from "./SiteFooter";
 
 const WEB_APP_URL = "https://app.dindin.cafelabs.net";
@@ -48,6 +49,7 @@ export default async function Home() {
             >
               {tHeader("brandBy")}
             </a>
+            <ThemeToggle />
             <LanguageSwitcher />
           </div>
         </div>

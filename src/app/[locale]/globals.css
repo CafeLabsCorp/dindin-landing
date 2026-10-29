@@ -69,8 +69,10 @@
   --font-serif: var(--font-fraunces);
 }
 
+/* Dark theme: follows the system unless the visitor picked a theme in
+   the header toggle (next-themes sets data-theme on <html>). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #16130f;
     --surface: #201c17;
     --foreground: #f5f1ea;
@@ -106,9 +108,49 @@
     --shadow-card: none;
   }
 
-  .envelope-tab {
+  :root:not([data-theme="light"]) .envelope-tab {
     opacity: 0.22;
   }
+}
+
+:root[data-theme="dark"] {
+  --background: #16130f;
+  --surface: #201c17;
+  --foreground: #f5f1ea;
+  --muted: #c9c2b4;
+  --subtle: #a79c89;
+  --border: rgba(245, 241, 234, 0.12);
+
+  --primary: #7fcb9e;
+  --primary-foreground: #0d3320;
+  --primary-container: #1f4732;
+  --primary-container-foreground: #bee8ce;
+
+  --secondary: #a9b896;
+
+  --accent: #f0916a;
+  --accent-foreground: #431507;
+
+  --status-warning: #e0a542;
+  --status-critical: #e8746a;
+  --status-good: #6fcb82;
+
+  --cat-1: #5fae80;
+  --cat-2: #e2896a;
+  --cat-3: #e0a542;
+  --cat-4: #4e96a3;
+  --cat-5: #a87ca0;
+  --cat-6: #d06868;
+  --cat-7: #aca85c;
+  --cat-8: #d69c90;
+
+  /* Rely on the hairline border for elevation in dark mode; surface is
+     already a step lighter than the page background. */
+  --shadow-card: none;
+}
+
+:root[data-theme="dark"] .envelope-tab {
+  opacity: 0.22;
 }
 
 html {

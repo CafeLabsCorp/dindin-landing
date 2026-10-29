@@ -5,7 +5,10 @@
   },
   "Header": {
     "brandBy": "by Café Labs",
-    "switchLanguage": "Switch language"
+    "switchLanguage": "Switch language",
+    "theme": "Theme",
+    "themeToLight": "Switch to light theme",
+    "themeToDark": "Switch to dark theme"
   },
   "Hero": {
     "title": "Budget-envelope money management",
