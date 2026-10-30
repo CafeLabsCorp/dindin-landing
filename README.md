@@ -106,5 +106,5 @@ to other Café Labs properties) are documented in `docs/ARQUITETURA.md` →
 - [x] Live at `dindin.cafelabs.net` (Vercel) — see `docs/DEPLOY.md`.
 - [ ] Windows download — "coming soon" placeholder, pending packaging decision
       (zip vs. Inno Setup).
-- [ ] Android download — "coming soon" placeholder, pending decision on where
-      to host the release `.apk`.
+- [x] Android download — links to the Google Play listing (production since
+      2026-10).

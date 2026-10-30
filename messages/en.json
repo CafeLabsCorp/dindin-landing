@@ -23,6 +23,7 @@
     "webAvailable": "Available now",
     "windowsLabel": "Windows",
     "androidLabel": "Android",
+    "androidAvailable": "On Google Play",
     "comingSoon": "Coming soon"
   },
   "Features": {

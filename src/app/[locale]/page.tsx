@@ -7,6 +7,8 @@ import { ThemeToggle } from "./ThemeToggle";
 import { SiteFooter } from "./SiteFooter";
 
 const WEB_APP_URL = "https://app.dindin.cafelabs.net";
+const PLAY_STORE_URL =
+  "https://play.google.com/store/apps/details?id=com.cafelabs.dindin";
 
 const heroTabs = [
   { top: "60px", left: "6%", rotate: "-9deg", cat: "var(--cat-1)" },
@@ -134,10 +136,19 @@ export default async function Home() {
               <span className="text-base font-semibold">{tDownload("windowsLabel")}</span>
               <span className="text-sm">{tDownload("comingSoon")}</span>
             </div>
-            <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-border p-6 text-center text-subtle">
-              <span className="text-base font-semibold">{tDownload("androidLabel")}</span>
-              <span className="text-sm">{tDownload("comingSoon")}</span>
-            </div>
+            <a
+              href={PLAY_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="card-hover flex flex-col items-center gap-2 rounded-2xl border border-border bg-surface p-6 text-center shadow-card transition-colors hover:border-primary"
+            >
+              <span className="text-base font-semibold text-foreground">
+                {tDownload("androidLabel")}
+              </span>
+              <span className="inline-flex rounded-full bg-primary-container px-3 py-1 text-xs font-semibold text-primary-container-foreground">
+                {tDownload("androidAvailable")}
+              </span>
+            </a>
           </div>
         </section>
 

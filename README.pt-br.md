@@ -106,5 +106,5 @@ links de saída pra outras propriedades da Café Labs) está documentado em
 - [x] No ar em `dindin.cafelabs.net` (Vercel) — ver `docs/DEPLOY.pt-br.md`.
 - [ ] Download Windows — placeholder "em breve", depende de decidir o empacotamento
       (zip vs. Inno Setup).
-- [ ] Download Android — placeholder "em breve", depende de decidir onde hospedar o
-      `.apk` de release.
+- [x] Download Android — leva pra ficha na Google Play (em produção desde
+      2026-10).
