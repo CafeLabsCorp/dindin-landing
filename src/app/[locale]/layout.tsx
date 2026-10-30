@@ -88,7 +88,7 @@ export default async function RootLayout({
       className={`${fraunces.variable} ${workSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
           <NextIntlClientProvider>{children}</NextIntlClientProvider>
         </ThemeProvider>
         <Analytics />
