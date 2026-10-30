@@ -104,7 +104,5 @@ links de saída pra outras propriedades da Café Labs) está documentado em
       scroll, acesso rápido ao produto acima da dobra) — ver `docs/ARQUITETURA.pt-br.md`.
 - [x] Internacionalização PT/EN com `next-intl`, seletor no cabeçalho.
 - [x] No ar em `dindin.cafelabs.net` (Vercel) — ver `docs/DEPLOY.pt-br.md`.
-- [ ] Download Windows — placeholder "em breve", depende de decidir o empacotamento
-      (zip vs. Inno Setup).
 - [x] Download Android — leva pra ficha na Google Play (em produção desde
       2026-10).

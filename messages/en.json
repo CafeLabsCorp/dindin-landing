@@ -21,10 +21,8 @@
     "title": "Get Dindin",
     "webLabel": "Web",
     "webAvailable": "Available now",
-    "windowsLabel": "Windows",
     "androidLabel": "Android",
-    "androidAvailable": "On Google Play",
-    "comingSoon": "Coming soon"
+    "androidAvailable": "On Google Play"
   },
   "Features": {
     "item1Title": "Income allocated instantly",

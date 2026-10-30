@@ -21,10 +21,8 @@
     "title": "Baixe o Dindin",
     "webLabel": "Web",
     "webAvailable": "Disponível agora",
-    "windowsLabel": "Windows",
     "androidLabel": "Android",
-    "androidAvailable": "Na Google Play",
-    "comingSoon": "Em breve"
+    "androidAvailable": "Na Google Play"
   },
   "Features": {
     "item1Title": "Receitas alocadas na hora",

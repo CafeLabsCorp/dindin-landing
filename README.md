@@ -104,7 +104,5 @@ to other Café Labs properties) are documented in `docs/ARQUITETURA.md` →
       indicator, above-the-fold product access) — see `docs/ARQUITETURA.md`.
 - [x] PT/EN internationalization with `next-intl`, switcher in the header.
 - [x] Live at `dindin.cafelabs.net` (Vercel) — see `docs/DEPLOY.md`.
-- [ ] Windows download — "coming soon" placeholder, pending packaging decision
-      (zip vs. Inno Setup).
 - [x] Android download — links to the Google Play listing (production since
       2026-10).

@@ -118,7 +118,7 @@ export default async function Home() {
           <h2 className="text-center font-serif text-3xl font-semibold text-foreground">
             {tDownload("title")}
           </h2>
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
             <a
               href={WEB_APP_URL}
               target="_blank"
@@ -132,10 +132,6 @@ export default async function Home() {
                 {tDownload("webAvailable")}
               </span>
             </a>
-            <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-border p-6 text-center text-subtle">
-              <span className="text-base font-semibold">{tDownload("windowsLabel")}</span>
-              <span className="text-sm">{tDownload("comingSoon")}</span>
-            </div>
             <a
               href={PLAY_STORE_URL}
               target="_blank"
